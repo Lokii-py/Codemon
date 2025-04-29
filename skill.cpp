@@ -1,5 +1,5 @@
 #include "skill.h"
-/*
+
 // Public functions 
 // Default constructor
 Skill::Skill() {
@@ -28,5 +28,3 @@ void Skill::increaseDamage(int percent) { // increases damage
 void Skill::print() const {
     std::cout << "  - " << name << " (Damage: " << baseDamage << ")\n";
 }
-*/
-
