@@ -2,7 +2,7 @@
 #define SKILL_H
 
 #include <iostream>
-/*
+
 class Skill {
 private:
     std::string name;
@@ -37,5 +37,5 @@ public:
     // Post: formats and print line for each skill
     void print() const;
 };
-*/
+
 #endif
