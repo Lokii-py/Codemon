@@ -4,7 +4,7 @@
 #include "skill.h"
 #include <iostream>
 #include <string>
-/*
+
 class Codemon {
 private:
     std::string name;
@@ -24,7 +24,7 @@ public:
     // Constructors
     // Desc: This is a default constructor that initializes all values of codemon
     // Pre: None
-    // Post: Assigns codemon�s name "None", sets the number of Cod�mons and items owned to 0. 
+    // Post: Assigns codemon’s name "None", sets the number of Codémons and items owned to 0. 
     Codemon(); // Default constructor
     
     // Desc: This is a constructor that allows for the inputs of the codemon to be passed in as value.
@@ -54,7 +54,6 @@ public:
     // Post: uses bubble sort to order skills by increasing base damage then prints it out
     void print();
 
-    
+    friend class Arena;
 };
-*/
 #endif

@@ -1,10 +1,16 @@
 #include "skill.h"
+<<<<<<< HEAD
 #include "Constant.h"
 #include "codemon.h" 
 #include <iostream>
 #include <string>
 using namespace std;
 
+=======
+
+// Public functions 
+// Default constructor
+>>>>>>> 9a36f292603eb6ebf62a928e7da95af194c2c7d6
 Skill::Skill() {
     name = " ";
     baseDamage = 0;

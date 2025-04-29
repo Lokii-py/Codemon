@@ -2,7 +2,7 @@
 // Date: 4/25/25
 // File: main.cpp
 // Assignment: HW7
-// Purpose: This is the Cod�mon simulation. The simulation creates three contestants who assemble
+// Purpose: This is the Codémon simulation. The simulation creates three contestants who assemble
 // their codemon teams, assign skills, and find items. It then prints out the data nicely and lastly 
 // does a skill search. This new addition to HW 6 is 
 #include "Arena.h"
@@ -25,13 +25,13 @@ int main() {
 	arena.printTerrainForDebug();
     
     char choice;
-    std::cout << "Would player like custom selection of Codemons? (y/n)\n";
+    std::cout << "PLAYER: Do you want custom selection of Codemons? (y/n)\n";
     std::cin >> choice;   // user selects or random
     if (choice == 'y') {
-        player.selectCodemons();
+        player.selectCodemons();      // choose three codemons
     }
     else {
-        player.generateCodemons();
+        player.generateCodemons();  // generate three codemons
     }
     computer.generateCodemons();
 

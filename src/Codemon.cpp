@@ -1,5 +1,5 @@
 #include "Codemon.h"
-/*
+
 // Member Function Definitions
 // Private functions 
 void Codemon::evolve() {
@@ -56,7 +56,7 @@ void Codemon::addSkill(const Skill& s) { //called from prepare function
 }
 
 void Codemon::print() {
-    /*std::cout << name << " (Type: " << type << ", Level: " << level << ", HP: " << hp << ")\n";
+    std::cout << name << " (Type: " << type << ", Level: " << level << ", HP: " << hp << ")\n";
     std::cout << "  Skills (sorted by base damage):\n";
     // Sort skills by base damage
     for (int i = 0; i < skillCount - 1; ++i) { // bubble sort method
@@ -73,4 +73,3 @@ void Codemon::print() {
         skills[i].print();
     
 }
-*/
