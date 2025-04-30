@@ -1,4 +1,7 @@
 #include "contestant.h"
+#include <iostream>
+#include <string>
+using namespace std;
 
 // Member Function Definition
 // Default constructor
@@ -50,7 +53,7 @@ void Contestant::updateCodemon(const Codemon& codemon) {
 void Contestant::prepare() {
     std::cout << "\nPreparing contestant: " << name << "\n";
 
-    // Add Codémons
+    // Add Codï¿½mons
     while (codemonCount < 10) {
         char choice;
         std::cout << "Add a Codemon? (y/n): ";
@@ -73,7 +76,7 @@ void Contestant::prepare() {
 
         Codemon codemon(codemonName, type, level, hp); // initializes codemon with values
 
-        // Add Skills to Codémon
+        // Add Skills to Codï¿½mon
         for (int i = 0; i < 6; ++i) {
             char skillChoice;
             std::cout << "Add a skill to " << codemonName << "? (y/n): ";

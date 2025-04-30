@@ -2,7 +2,7 @@
 // Date: 4/25/25
 // File: main.cpp
 // Assignment: HW7
-// Purpose: This is the Codémon simulation. The simulation creates three contestants who assemble
+// Purpose: This is the Codï¿½mon simulation. The simulation creates three contestants who assemble
 // their codemon teams, assign skills, and find items. It then prints out the data nicely and lastly 
 // does a skill search. This new addition to HW 6 is 
 

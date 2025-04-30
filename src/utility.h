@@ -2,6 +2,8 @@
 #define UTILITY_H
 
 #include "contestant.h"
+#include <iostream>
+#include <string>
 
 class Arena {
 private:

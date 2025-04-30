@@ -1,4 +1,10 @@
 #include "utility.h"
+#include "contestant.h"
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+usign namespace std;
 
 void Arena::generateTerrain() {
     // Fill terrainMap with valid terrain

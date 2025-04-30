@@ -24,7 +24,7 @@ public:
     // Constructors
     // Desc: This is a default constructor that initializes all values of codemon
     // Pre: None
-    // Post: Assigns codemon’s name "None", sets the number of Codémons and items owned to 0. 
+    // Post: Assigns codemonï¿½s name "None", sets the number of Codï¿½mons and items owned to 0. 
     Codemon(); // Default constructor
     
     // Desc: This is a constructor that allows for the inputs of the codemon to be passed in as value.
