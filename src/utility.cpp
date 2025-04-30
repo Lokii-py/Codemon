@@ -1,10 +1,9 @@
-#include "utility.h"
-#include "contestant.h"
+#include <utility.h>
 #include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
-usign namespace std;
+using namespace std;
 
 void Arena::generateTerrain() {
     // Fill terrainMap with valid terrain
@@ -21,7 +20,8 @@ void Arena::generateTerrain() {
             terrainMap[i][j] = newType;
         }
     }
-}
+};
+
 bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
     // Check for neighbors (top, bottom, left, right) to ensure they are not the same type
     // Top
@@ -42,7 +42,7 @@ bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
     }
 
     return false;
-}
+};
 
 void Arena::printTerrainForDebug() const {
 	// Print the terrain map for debugging
@@ -53,9 +53,7 @@ void Arena::printTerrainForDebug() const {
 		}
 		std::cout << "\n";
 	}
-}
-
-
+};
 
 
 const int POOL_SIZE = 12;
