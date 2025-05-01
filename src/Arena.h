@@ -2,7 +2,7 @@
 #define ARENA_H
 
 class Arena {
-private:
+private: 
     static const int SIZE = 5;
 	char terrainMap[SIZE][SIZE]; // 2D array for terrain
     bool occupied[SIZE][SIZE]{};

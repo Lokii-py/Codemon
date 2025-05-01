@@ -2,11 +2,7 @@
 // Date: 4/25/25
 // File: main.cpp
 // Assignment: HW7
-<<<<<<< HEAD:main.cpp
 // Purpose: This is the Codémon simulation. The simulation creates three contestants who assemble
-=======
-// Purpose: This is the Cod�mon simulation. The simulation creates three contestants who assemble
->>>>>>> origin/Lokii:src/main.cpp
 // their codemon teams, assign skills, and find items. It then prints out the data nicely and lastly 
 // does a skill search. This new addition to HW 6 is 
 #include "Arena.h"
@@ -30,11 +26,7 @@ int main() {
     std::cout << "PLAYER: DO you want custom selection of Codemons? (y/n)\n";
     std::cin >> choice;   // user selects or random
     if (choice == 'y') {
-<<<<<<< HEAD:main.cpp
         player.selectCodemons();      // choose three codemons
-=======
-        player.selectCodemons();
->>>>>>> origin/Lokii:src/main.cpp
     }
     else {
         player.generateCodemons();  // generate three codemons
@@ -50,6 +42,7 @@ int main() {
 
     player.print();
     computer.print();
+    
     
     /*
     // Main Game Loop
