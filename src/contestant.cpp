@@ -1,4 +1,7 @@
 #include "contestant.h"
+#include <iostream>
+#include <string>
+using namespace std;
 
 // Member Function Definition
 // Default constructor
@@ -50,14 +53,62 @@ void Contestant::updateCodemon(const Codemon& codemon) {
 void Contestant::prepare() {
     std::cout << "\nPreparing contestant: " << name << "\n";
 
+<<<<<<< HEAD:contestant.cpp
     // Add Codémons
+=======
+    // Add Cod�mons
+>>>>>>> origin/Lokii:src/contestant.cpp
     while (codemonCount < 10) {
         char choice;
         std::cout << "Add a Codemon? (y/n): ";
         std::cin >> choice;
         if (choice != 'y') break;
 
+<<<<<<< HEAD:contestant.cpp
         
+=======
+        std::string codemonName, type;
+        int level, hp;
+
+        std::cin.ignore();
+        std::cout << "Enter Codemon name: "; // taking in parameters
+        std::getline(std::cin, codemonName);
+        std::cout << "Enter type: ";
+        std::getline(std::cin, type);
+        std::cout << "Enter level: ";
+        std::cin >> level;
+        std::cout << "Enter HP: ";
+        std::cin >> hp;
+        std::cin.ignore();
+
+        Codemon codemon(codemonName, type, level, hp); // initializes codemon with values
+
+        // Add Skills to Cod�mon
+        for (int i = 0; i < 6; ++i) {
+            char skillChoice;
+            std::cout << "Add a skill to " << codemonName << "? (y/n): ";
+            std::cin >> skillChoice ;
+            if (skillChoice != 'y') {
+                break;
+            }
+            std::string skillName;
+            int damage;
+
+            std::cin.ignore();
+            std::cout << "  Enter skill name: "; // taking in skills info
+            std::getline(std::cin, skillName);
+            std::cout << "  Enter base damage: ";
+            std::cin >> damage;
+            std::cin.ignore();
+
+            Skill skill(skillName, damage); // intializes skill
+            codemon.addSkill(skill);        // then adds skill
+        }
+
+        updateCodemon(codemon); // adds codemon
+    }
+
+>>>>>>> origin/Lokii:src/contestant.cpp
 }
 */
 void Contestant::print() {

@@ -2,37 +2,51 @@
 // Date: 4/25/25
 // File: main.cpp
 // Assignment: HW7
+<<<<<<< HEAD:main.cpp
 // Purpose: This is the Codémon simulation. The simulation creates three contestants who assemble
+=======
+// Purpose: This is the Cod�mon simulation. The simulation creates three contestants who assemble
+>>>>>>> origin/Lokii:src/main.cpp
 // their codemon teams, assign skills, and find items. It then prints out the data nicely and lastly 
 // does a skill search. This new addition to HW 6 is 
-
+#include "Arena.h"
 #include <iostream>
 #include "contestant.h"
 #include "utility.h"
+using namespace std;
 
 int main() {
-    ///////////////////////////////////////////////////////////////
 
-    srand(1025); // Set random seed ONCE
+    Arena arena; //Initalize the battle arena
+    Contestant Player("Player"), Computer("CPU"); //initalize the contestant
 
-    Arena arena;
+    // Set random seed ONCE
+    srand(1025);
+
     arena.generateTerrain(); // Fill terrainMap with valid terrain
 	arena.printTerrainForDebug(); 
-
-    // Create contestants
-    Contestant player("Player");
-    Contestant computer("CPU");
     
     char choice;
     std::cout << "PLAYER: DO you want custom selection of Codemons? (y/n)\n";
     std::cin >> choice;   // user selects or random
     if (choice == 'y') {
+<<<<<<< HEAD:main.cpp
         player.selectCodemons();      // choose three codemons
+=======
+        player.selectCodemons();
+>>>>>>> origin/Lokii:src/main.cpp
     }
     else {
         player.generateCodemons();  // generate three codemons
     }
-    computer.generateCodemons(); // random from pool
+    computer.generateCodemons();
+
+    //Deploy codemon to the unoccupied and valid grid in arena randomly
+    int row, colm;
+    do{
+        row = rand() % 5;
+        colm = rand() % 5;
+    } while (arena.isOccupied(row, colm))
 
     player.print();
     computer.print();

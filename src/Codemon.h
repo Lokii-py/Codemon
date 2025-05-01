@@ -24,7 +24,11 @@ public:
     // Constructors
     // Desc: This is a default constructor that initializes all values of codemon
     // Pre: None
+<<<<<<< HEAD:Codemon.h
     // Post: Assigns codemon’s name "None", sets the number of Codémons and items owned to 0. 
+=======
+    // Post: Assigns codemon�s name "None", sets the number of Cod�mons and items owned to 0. 
+>>>>>>> origin/Lokii:src/Codemon.h
     Codemon(); // Default constructor
     
     // Desc: This is a constructor that allows for the inputs of the codemon to be passed in as value.
