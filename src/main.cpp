@@ -5,25 +5,27 @@
 // Purpose: This is the Codémon simulation. The simulation creates three contestants who assemble
 // their codemon teams, assign skills, and find items. It then prints out the data nicely and lastly 
 // does a skill search. This new addition to HW 6 is 
-#include "Arena.h"
+
 #include <iostream>
 #include "contestant.h"
 #include "utility.h"
+#include "Arena.h"
+
 using namespace std;
 
 int main() {
 
     Arena arena; //Initalize the battle arena
-    Contestant Player("Player"), Computer("CPU"); //initalize the contestant
+    Contestant player("Player"), computer("CPU"); //initalize the contestant
 
     // Set random seed ONCE
     srand(1025);
 
     arena.generateTerrain(); // Fill terrainMap with valid terrain
-	arena.printTerrainForDebug(); 
-    
+    arena.printTerrainForDebug();
+
     char choice;
-    std::cout << "PLAYER: DO you want custom selection of Codemons? (y/n)\n";
+    std::cout << "PLAYER: Do you want custom selection of Codemons? (y/n)\n";
     std::cin >> choice;   // user selects or random
     if (choice == 'y') {
         player.selectCodemons();      // choose three codemons
@@ -35,15 +37,15 @@ int main() {
 
     //Deploy codemon to the unoccupied and valid grid in arena randomly
     int row, colm;
-    do{
+    do {
         row = rand() % 5;
         colm = rand() % 5;
-    } while (arena.isOccupied(row, colm))
+    } while (arena.isOccupied(row, colm));
 
     player.print();
     computer.print();
-    
-    
+
+
     /*
     // Main Game Loop
     while (!player.isEliminated() && !computer.isEliminated()) {

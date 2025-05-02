@@ -1,20 +1,24 @@
 #ifndef ARENA_H
 #define ARENA_H
 
+#include <iostream>
+
 class Arena {
-private: 
+private:
     static const int SIZE = 5;
-	char terrainMap[SIZE][SIZE]; // 2D array for terrain
+    char terrainMap[SIZE][SIZE]; // 2D array for terrain
     bool occupied[SIZE][SIZE]{};
+    char visibleMap[SIZE][SIZE];
+
 
 public:
 
     Arena();
 
-	//Desc: This function will generate the terrain map for he arena
-	//pre: None
-	//post: Generates a 5 * 5 grid of terrain types
-	void generateTerrain();
+    //Desc: This function will generate the terrain map for he arena
+    //pre: None
+    //post: Generates a 5 * 5 grid of terrain types
+    void generateTerrain();
 
     //Desc: This function will generate True if codemon is already there
     //Pre: None
@@ -31,13 +35,23 @@ public:
     //Post: Return 'F' = Forest, 'M' = Mountain, 'P' = Plain, 'W' = Water, 'S' = Swamp
     char getTerrainTile(int row, int col) const;
 
-	//Desc: checks if tile has same type neighbor
+    //Desc: checks if tile has same type neighbor
     //Pre: x, t are integer and type is char
     //Post: Check for neighbors (top, bottom, left right) to ensure they are not same type
-	bool hasSameTypeNeighbor(int x, int y, char type) const;
+    bool hasSameTypeNeighbor(int x, int y, char type) const;
 
     //for debugging
-	void printTerrainForDebug() const;
+    void printTerrainForDebug() const;
+
+    
+
+    
+        
+     void placeCodemon(int& row, int& col);
+     void updateVisibility(int x, int y);
+     char (*getTerrainMap())[5];
+     char (*getVisibleMap())[5];
+
 };
 
 #endif

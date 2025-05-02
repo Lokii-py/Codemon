@@ -7,6 +7,7 @@ Arena::Arena() {
     for (int r = 0; r < SIZE; ++r) {
         for (int c = 0; c < SIZE; ++c) {
             occupied[r][c] = false;
+            visibleMap[r][c] = '#';
         }
     }
     generateTerrain();
@@ -29,15 +30,15 @@ void Arena::generateTerrain() {
     }
 }
 
-bool Arena::isOccupied(int row, int col) const{
+bool Arena::isOccupied(int row, int col) const {
     return occupied[row][col];
 }
 
-void Arena::markOccupied(int row, int col){
+void Arena::markOccupied(int row, int col) {
     occupied[row][col] = true;
 }
 
-char Arena::getTerrainTile(int row, int col) const{
+char Arena::getTerrainTile(int row, int col) const {
     char type;
     type = terrainMap[row][col];
     return type;
@@ -66,12 +67,36 @@ bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
 };
 
 void Arena::printTerrainForDebug() const {
-	// Print the terrain map for debugging
-	cout << "Terrain Map:\n";
-	for (int i = 0; i < 5; ++i) {
-		for (int j = 0; j < 5; ++j) {
-		    cout << terrainMap[i][j] << " ";
-		}
-		cout << "\n";
-	}
+    // Print the terrain map for debugging
+    cout << "Terrain Map:\n";
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            cout << terrainMap[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+
+void Arena::updateVisibility(int x, int y) {
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            visibleMap[i][j] = '#';
+        }
+    }
+    for (int i = -1; i <= 1; ++i) {
+        for (int j = -1; j <= 1; ++j) {
+            int nx = x + i;
+            int ny = y + j;
+            if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE)
+                visibleMap[nx][ny] = terrainMap[nx][ny];
+        }
+    }
+}
+
+char (*Arena::getTerrainMap())[5] {
+    return terrainMap;
+}
+
+char (*Arena::getVisibleMap())[5] {
+    return visibleMap;
 }
