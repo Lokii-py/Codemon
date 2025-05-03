@@ -53,20 +53,13 @@ void Contestant::updateCodemon(const Codemon& codemon) {
 void Contestant::prepare() {
     std::cout << "\nPreparing contestant: " << name << "\n";
 
-<<<<<<< HEAD:contestant.cpp
-    // Add Codémons
-=======
     // Add Cod�mons
->>>>>>> origin/Lokii:src/contestant.cpp
     while (codemonCount < 10) {
         char choice;
         std::cout << "Add a Codemon? (y/n): ";
         std::cin >> choice;
         if (choice != 'y') break;
 
-<<<<<<< HEAD:contestant.cpp
-        
-=======
         std::string codemonName, type;
         int level, hp;
 
@@ -108,7 +101,6 @@ void Contestant::prepare() {
         updateCodemon(codemon); // adds codemon
     }
 
->>>>>>> origin/Lokii:src/contestant.cpp
 }
 */
 void Contestant::print() {
