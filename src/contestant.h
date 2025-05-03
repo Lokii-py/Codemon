@@ -1,6 +1,5 @@
 #ifndef CONTESTANT_H
 #define CONTESTANT_H
- 
 #include "codemon.h"
 #include <string>
 
@@ -51,10 +50,6 @@ public:
     // Post: sorts pocket and backpack then prints each 
     void print();
 
-
-
-    ///////////////////////////////////
-
     // Desc: This function 
     // Pre: none
     // Post: 
@@ -64,9 +59,6 @@ public:
     // Pre: none
     // Post: 
     void generateCodemons();
-
-
-
 
 };
 
