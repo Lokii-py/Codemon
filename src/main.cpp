@@ -8,7 +8,8 @@
 #include "Arena.h"
 #include <iostream>
 #include "contestant.h"
-#include "utility.h"
+#include "Constant.h"
+#include "mechanic.h"
 using namespace std;
 
 int main() {
@@ -20,7 +21,7 @@ int main() {
     srand(1025);
 
     arena.generateTerrain(); // Fill terrainMap with valid terrain
-	arena.printTerrainForDebug(); 
+	arena.printTerrainForDebug();
     
     char choice;
     std::cout << "Would player like custom selection of Codemons? (y/n)\n";
@@ -34,30 +35,28 @@ int main() {
     computer.generateCodemons();
 
     //Deploy codemon to the unoccupied and valid grid in arena randomly
-    int row, colm;
+    int row, col;
     do{
         row = rand() % 5;
-        colm = rand() % 5;
-    } while (arena.isOccupied(row, colm))
-
-    /*
-    arena.placeCodemon(computer);
-    arena.placeCodemon(player);  // place one Codemon randomly
-
-    arena.printVisibleMap(player);
-    /*
-    // Main Game Loop
-    while (!player.isEliminated() && !computer.isEliminated()) {
-        arena.executeTurn(player, computer);     // Player turn
-        if (computer.isEliminated()) break;
-
-        arena.executeTurn(computer, player);     // CPU turn
+        col = rand() % 5;
+    }  while (arena.isOccupied(row, col));
+    
+    char move;
+    cout << "Please choose the place to position your codemon: ";
+    cin >> move;
+    
+    movement(move, row, col, arena);
+    //row and col afterward this place is the position you can use it to specify the codemon position
+    // TO DO: Put codemon position in the arena grid displaying 3 *3 grid .
+    
+    //Movement for computer:
+    bool Random = true;
+    if (Random) {
+        int num = rand() % 8;
+        char moves[] = {'W', 'A', 'S', 'D', 'Q', 'E', 'Z', 'C'};
+        movement(moves[num], row, col, arena, true);
     }
 
-    if (player.isEliminated())
-        std::cout << "\nCPU wins the battle!\n";
-    else
-        std::cout << "\nYou win the battle!\n";
-        */
+    
     return 0;
 }
