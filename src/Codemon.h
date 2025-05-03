@@ -1,6 +1,6 @@
 #ifndef CODEMON_H
 #define CODEMON_H
-
+ 
 #include "skill.h"
 #include <iostream>
 #include <string>
@@ -19,25 +19,25 @@ private:
     // Post: If chance >= 60, level increases by 1 and the base damage of a randomly select current skill increases by a random 
     // percentage between 0 % and 100 %. Then it displays a message.
     void evolve();
-    
+
 public:
     // Constructors
     // Desc: This is a default constructor that initializes all values of codemon
     // Pre: None
     // Post: Assigns codemon’s name "None", sets the number of Codémons and items owned to 0. 
     Codemon(); // Default constructor
-    
+
     // Desc: This is a constructor that allows for the inputs of the codemon to be passed in as value.
     // Pre: need string arguements and int arguements
     // Post: Takes argument for the name, type, level, and hp and assigns them accordingly. 
     Codemon(const std::string name, const std::string type, const int level, const int hp); // paremeterized constructor
-    
+
     // Functions
     // Desc: This functions returns the name of the codemon
     // Pre: none
     // Post: returns string of codemon name
     std::string getName() const;
-    
+
     // Desc: This functions returns the level of the codemon
     // Pre: none
     // Post: returns int of codemon level
@@ -53,6 +53,10 @@ public:
     // Pre: None
     // Post: uses bubble sort to order skills by increasing base damage then prints it out
     void print();
+
+
+    int getTypeIndex() const;
+
 
     friend class Arena;
 };

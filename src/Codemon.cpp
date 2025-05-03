@@ -14,7 +14,7 @@ void Codemon::evolve() {
         skills[index].increaseDamage(boost);
     }
 }
-
+ 
 // Public functions 
 // Default constructor
 Codemon::Codemon() {
@@ -29,7 +29,7 @@ Codemon::Codemon() {
 Codemon::Codemon(const std::string n, const std::string t, const int l, const int hpp) {
     name = n;
     type = t;
-    level = l;
+    level = l; 
     hp = hpp;
     skillCount = 0;
 }
@@ -43,7 +43,7 @@ int Codemon::getLevel() const {
 }
 
 void Codemon::addSkill(const Skill& s) { //called from prepare function
-    for (int i = 0; i < skillCount; ++i) // checks if skills is already possessed
+    for (int i = 0; i < skillCount; i++) // checks if skills is already possessed
         if (skills[i].getName() == s.getName()) {
             std::cout << "Skill already known by Codemon. Can't add skill.\n";
             return;
@@ -71,5 +71,22 @@ void Codemon::print() {
 
     for (int i = 0; i < skillCount; ++i)
         skills[i].print();
-    
+
+}
+
+int Codemon::getTypeIndex() const {
+    if (type == "Fire") {
+        return 0;
+    }
+    if (type == "Water") {
+        return 1;
+    }
+    if (type == "Grass") {
+        return 2;
+    }
+    if (type == "Electric") {
+        return 3;
+    }
+    std::cout << "type index not found";
+    return -1;
 }
