@@ -4,7 +4,7 @@
 class Arena {
 private:
     static const int SIZE = 5;
-	char terrainMap[SIZE][SIZE]; // 2D array for terrain
+	char terrainMap[SIZE][SIZE];
     bool occupied[SIZE][SIZE]{};
 
 public:
@@ -25,6 +25,11 @@ public:
     //Pre: row and col are integers
     //Post: None
     void markOccupied(int row, int col);
+
+    //Desc: This setter function will set the grid of the terrain map as per the char
+    //Pre: row and col are passed as the const
+    //Post: None update the terrain map
+    void setTerrainTile(const int row, const int col, char c);
 
     //Desc: This function will return back the terrain tile
     //Pre: Row and col are integers

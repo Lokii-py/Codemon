@@ -37,6 +37,11 @@ void Arena::markOccupied(int row, int col){
     occupied[row][col] = true;
 }
 
+void Arena::setTerrainTile(int& row, int& col, char c){
+    terrainMap[row][col] = c
+}
+
+
 char Arena::getTerrainTile(int row, int col) const{
     char type;
     type = terrainMap[row][col];
@@ -70,7 +75,7 @@ void Arena::printTerrainForDebug() const {
 	cout << "Terrain Map:\n";
 	for (int i = 0; i < 5; ++i) {
 		for (int j = 0; j < 5; ++j) {
-		    cout << terrainMap[i][j] << " ";
+            cout << terrainMap[i][j] << " ";
 		}
 		cout << "\n";
 	}
