@@ -43,4 +43,12 @@ const int CODEMON_SKILL_DAMAGE[POOL_SIZE] = {
     15, 14, 19, 17,
     16, 18, 20, 21
 };
+
+const double typeChart[4][4] = {
+    {1.0, 0.5, 2.0, 1.0}, // Fire
+    {2.0, 1.0, 0.5, 1.0}, // Water
+    {0.5, 2.0, 1.0, 1.0}, // Grass
+    {1.0, 2.0, 1.0, 1.0}  // Electric
+};
+
 #endif

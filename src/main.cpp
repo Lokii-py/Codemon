@@ -6,16 +6,17 @@
 // their codemon teams, assign skills, and find items. It then prints out the data nicely and lastly 
 // does a skill search. This new addition to HW 6 is 
 #include "Arena.h"
-#include <iostream>
 #include "contestant.h"
 #include "Constant.h"
 #include "mechanic.h"
+#include <iostream>
 using namespace std;
 
 int main() {
 
     Arena arena; //Initalize the battle arena
     Contestant Player("Player"), Computer("CPU"); //initalize the contestant
+    BattleGround battle;
 
     // Set random seed ONCE
     srand(1025);
@@ -57,6 +58,22 @@ int main() {
         movement(moves[num], row, col, arena, true);
     }
 
+    if(Player && battle.isEnemyInRange(row, col, arena)){
+        cout<< "Enemy in range! Initiating battle..." << endl;
+        string response, skill;
+        cout << "Do you want to attack? (yes/no)";
+        cin >> response;
+        if (response == "yes") {
+            cout << "Select a skill to attack with: ";
+            cin >> skill;
+        } else {
+            cout << "Not attacking." << endl;
+        }
+    }
+
+    if(Computer && battle.isEnemyInRange(row, col, arena)){
+        // start attacter
+    }
     
     return 0;
 }

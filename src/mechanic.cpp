@@ -6,16 +6,6 @@
 #include <ctime>
 using namespace std;
 
-/* W, A, S, D for cardinal directions, Q, E, Z, C for diagonals
------------------------------
-W - Up      | Q - Up left
-A - Left    | E - Up Right
-S - Down    | Z - Down left
-D - Right   | C - Down Right
------------------------------
-- Implement Random Movement for Computer
-- This will take the current position of codemon 
-- And update it with the new movement*/
 void movement(const char move, int &row, const int &col, Arena& arena){
     int n_row = row;
     int n_col = col;
@@ -68,8 +58,17 @@ void movement(const char move, int &row, const int &col, Arena& arena){
     row = n_row;
     col = n_col;
     arena.markOccupied(row, col);
-
 }
 
 
-
+bool isEnemyInRange(int& row, int& col, Arena& arena){
+    for(int i = row - 1; i <= row + 1; i++){
+        for(int j = col - 1; j <= col + 1; j++){
+            if(i >= 0 && i < 5 && j >= 0 && j < 5){
+                if(arena.getTerrainTile(i, j) == 'E'){
+                    return true;
+                }
+            }
+        }
+    }
+}

@@ -1,8 +1,9 @@
 #ifndef SKILL_H
 #define SKILL_H
+#include "Codemon.h"
 
 #include <iostream>
-/*
+
 class Skill {
 private:
     std::string name;
@@ -15,7 +16,7 @@ public:
     Skill();
     // Desc: This is a constructor that allows for the inputs of the skill to be passed in as value.
     // Pre: need string arguement and int arguement
-    // Post: Takes argument for the name and base damage and assigns them accordingly. 
+    // Post: Takes argument for the name and base damage and assigns them accordingly.
     Skill(const std::string& name, int baseDamage);
 
     // Desc: This functions returns the base damage of the skill
@@ -36,6 +37,11 @@ public:
     // Pre: None
     // Post: formats and print line for each skill
     void print() const;
+
+    //Desc: This function calculates the effective damage based on the type chart
+    //Pre: attacker and defender are Codemon objects
+    //Post: returns the effective damage as a double
+    double getEffectiveDamage(const Codemon& attacker, const Codemon& defender) const
 };
-*/
+
 #endif

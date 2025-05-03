@@ -22,4 +22,7 @@ D - Right   | C - Down Right
 - This will take the current position of codemon */
 void movement(char move, int& row, int& col, Arena& arena);
 
+/*This  will check if the enemy in in range and start a battle session*/
+bool isEnemyInRange(int& row, int& col, Arena& arena);
+
 #endif
