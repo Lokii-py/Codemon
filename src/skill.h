@@ -1,7 +1,7 @@
 #ifndef SKILL_H
 #define SKILL_H
 #include "Codemon.h"
-
+ 
 #include <iostream>
 
 class Skill {
@@ -41,7 +41,7 @@ public:
     //Desc: This function calculates the effective damage based on the type chart
     //Pre: attacker and defender are Codemon objects
     //Post: returns the effective damage as a double
-    double getEffectiveDamage(const Codemon& attacker, const Codemon& defender) const
+    double getEffectiveDamage(const Codemon& attacker, const Codemon& defender) const;
 };
 
 #endif
