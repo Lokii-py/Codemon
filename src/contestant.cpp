@@ -26,20 +26,20 @@ Contestant::Contestant(const Contestant& clone) {
 
     for (int i = 0; i < codemonCount; ++i) // copies over all data
         pocket[i] = clone.pocket[i];
-
 }
-
+ 
 std::string Contestant::getName() const {
     return name;
 }
 
 void Contestant::updateCodemon(const Codemon& codemon) {
+
     if (codemonCount >= 10) {
         std::cout << "Pocket is full.\n"; // can't add more than 10 codemons
         return;
     }
 
-    for (int i = 0; i < codemonCount; ++i) { // can't add codemon with same name
+    for (int i = 0; i < codemonCount; i++) { // can't add codemon with same name
         if (pocket[i].getName() == codemon.getName()) {
             std::cout << "Codemon with the same name already exists. Can't add Codemon.\n";
             return;
@@ -47,69 +47,16 @@ void Contestant::updateCodemon(const Codemon& codemon) {
     }
 
     pocket[codemonCount++] = codemon;  // assigns codemon at index then increases count
+    
 }
 
-/*
-void Contestant::prepare() {
-    std::cout << "\nPreparing contestant: " << name << "\n";
-
-    // Add Cod�mons
-    while (codemonCount < 10) {
-        char choice;
-        std::cout << "Add a Codemon? (y/n): ";
-        std::cin >> choice;
-        if (choice != 'y') break;
-
-        std::string codemonName, type;
-        int level, hp;
-
-        std::cin.ignore();
-        std::cout << "Enter Codemon name: "; // taking in parameters
-        std::getline(std::cin, codemonName);
-        std::cout << "Enter type: ";
-        std::getline(std::cin, type);
-        std::cout << "Enter level: ";
-        std::cin >> level;
-        std::cout << "Enter HP: ";
-        std::cin >> hp;
-        std::cin.ignore();
-
-        Codemon codemon(codemonName, type, level, hp); // initializes codemon with values
-
-        // Add Skills to Cod�mon
-        for (int i = 0; i < 6; ++i) {
-            char skillChoice;
-            std::cout << "Add a skill to " << codemonName << "? (y/n): ";
-            std::cin >> skillChoice ;
-            if (skillChoice != 'y') {
-                break;
-            }
-            std::string skillName;
-            int damage;
-
-            std::cin.ignore();
-            std::cout << "  Enter skill name: "; // taking in skills info
-            std::getline(std::cin, skillName);
-            std::cout << "  Enter base damage: ";
-            std::cin >> damage;
-            std::cin.ignore();
-
-            Skill skill(skillName, damage); // intializes skill
-            codemon.addSkill(skill);        // then adds skill
-        }
-
-        updateCodemon(codemon); // adds codemon
-    }
-
-}
-*/
 void Contestant::print() {
     std::cout << "\nContestant name: " << name << "\n";
     std::cout << "Number of Codemons owned: " << codemonCount << "\n";
 
     // Sort pocket by level
-    for (int i = 0; i < codemonCount - 1; ++i) {  // bubble sort method
-        for (int j = 0; j < codemonCount - i - 1; ++j) {
+    for (int i = 0; i < codemonCount - 1; i++) {  // bubble sort method
+        for (int j = 0; j < codemonCount - i - 1; j++) {
             if (pocket[j].getLevel() > pocket[j + 1].getLevel()) {
                 Codemon temp = pocket[j];
                 pocket[j] = pocket[j + 1];
@@ -119,7 +66,7 @@ void Contestant::print() {
     }
 
     std::cout << "Pocket list (sorted by level):\n"; // prints out pocket
-    for (int i = 0; i < codemonCount; ++i) {
+    for (int i = 0; i < codemonCount; i++) {
         std::cout << "  " << (i + 1) << ") ";
         pocket[i].print();
     }
@@ -135,7 +82,7 @@ void Contestant::selectCodemons() {
         int level, hp;
 
         std::cin.ignore();
-        std::cout << "Enter Codemon #" << i+1 << " name: "; // taking in parameters
+        std::cout << "Enter Codemon #" << i + 1 << " name: "; // taking in parameters
         std::getline(std::cin, codemonName);
         std::cout << "Enter type: ";
         std::getline(std::cin, type);
@@ -148,7 +95,7 @@ void Contestant::selectCodemons() {
         Codemon codemon(codemonName, type, level, hp); // initializes codemon with values
 
         // Add Skills to Codémon
-        for (int i = 0; i < 6; ++i) {
+        for (int i = 0; i < 6; i++) {
             char skillChoice;
             std::cout << "Add a skill to " << codemonName << "? (y/n): ";
             std::cin >> skillChoice;
@@ -171,7 +118,7 @@ void Contestant::selectCodemons() {
 
         updateCodemon(codemon); // adds codemon
     }
-    
+
 }
 
 const int POOL_SIZE = 12;
@@ -194,8 +141,8 @@ const std::string CODEMON_NAMES[POOL_SIZE] = {
 const std::string CODEMON_TYPES[4] = {
     "Fire",
     "Water",
-    "Grass", 
-    "Electric", 
+    "Grass",
+    "Electric",
 };
 
 const int CODEMON_HP[POOL_SIZE] = {
@@ -235,21 +182,22 @@ void Contestant::generateCodemons() {
         Codemon codemon(codemonName, type, level, hp); // initializes codemon with values
 
         // Add Skills to Codémon
-        for (int i = 0; i < 6; ++i) {
-            
+        for (int i = 0; i < 6; i++) {
+
             std::string skillName;
             int damage;
 
             skillName = CODEMON_SKILLS[random];
             damage = CODEMON_SKILL_DAMAGE[rand() % 12];
-            
+
             Skill skill(skillName, damage); // intializes skill
             codemon.addSkill(skill);        // then adds skill
         }
 
         updateCodemon(codemon); // adds codemon
 
-}
+    }
 
+}
 
 
