@@ -1,23 +1,21 @@
-#include <utility.h>
+#ifndef CONSTANT_H
+#define CONSTANT_H
 #include <iostream>
 #include <string>
-#include <cstdlib>
-#include <ctime>
-using namespace std;
 
 const int POOL_SIZE = 12;
 
 const std::string CODEMON_NAMES[POOL_SIZE] = {
     "Flareth", // Fire
     "Aquagon", // Water
-    "Leafowl", // Grass 
-    "Voltiguana", // Electric 
+    "Leafowl", // Grass
+    "Voltiguana", // Electric
     "Infermouse", // Fire
     "Bubbletail", // Water
-    "Shrubling", // Grass 
+    "Shrubling", // Grass
     "Zapkit", // Electric
     "Cindermole", // Fire
-    "Torrentoise", // Water 
+    "Torrentoise", // Water
     "Thornabbit", // Grass
     "Shockpup" // Electric
 };
@@ -45,3 +43,4 @@ const int CODEMON_SKILL_DAMAGE[POOL_SIZE] = {
     15, 14, 19, 17,
     16, 18, 20, 21
 };
+#endif
