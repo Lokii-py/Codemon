@@ -1,6 +1,7 @@
 #ifndef CONTESTANT_H
 #define CONTESTANT_H
-#include "codemon.h"
+ 
+#include "Codemon.h"
 #include <string>
 
 class Contestant {
@@ -59,8 +60,6 @@ public:
     // Pre: none
     // Post: 
     void generateCodemons();
-
 };
 
 #endif
-

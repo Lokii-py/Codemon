@@ -9,7 +9,7 @@ using namespace std;
 void movement(const char move, int& row, int& col, Arena& arena) {
     int n_row = row;
     int n_col = col;
-     
+
     switch (move) {
     case 'W':
         n_row = row - 1;
@@ -72,4 +72,5 @@ bool isEnemyInRange(int& row, int& col, Arena& arena) {
             }
         }
     }
+    return false;
 }

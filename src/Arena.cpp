@@ -114,3 +114,4 @@ void Arena::printVisibleMap() const {  // I know it is not "void Contestant::pri
     }
     std::cout << "==========\n";
 }
+ 

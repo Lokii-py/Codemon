@@ -1,8 +1,8 @@
 #ifndef SKILL_H
 #define SKILL_H
-#include "Codemon.h"
- 
+
 #include <iostream>
+class Codemon;
 
 class Skill {
 private:

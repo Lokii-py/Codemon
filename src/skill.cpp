@@ -1,5 +1,5 @@
 #include "skill.h"
-#include "codemon.h" 
+#include "Codemon.h" 
 #include <iostream>
 #include <string>
 using namespace std;

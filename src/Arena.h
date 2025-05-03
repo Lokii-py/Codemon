@@ -5,7 +5,7 @@
 
 class Arena {
 private:
-    static const int SIZE = 5;
+    static constexpr int SIZE = 5;
     char terrainMap[SIZE][SIZE]; // 2D array for terrain
     bool occupied[SIZE][SIZE]{};
     char visibleMap[SIZE][SIZE];
@@ -21,7 +21,7 @@ public:
     //post: Generates a 5 * 5 grid of terrain types
     void generateTerrain();
 
-    //Desc: This function will generate True if codemon is already there
+    //Desc: This function will return True if a Codemon is already there
     //Pre: None
     //Post: Returns Boolean value
     bool isOccupied(int row, int col) const;
@@ -51,7 +51,6 @@ public:
     void updateVisibility(int x, int y);
     
     void printVisibleMap() const;
-
 
 };
 
