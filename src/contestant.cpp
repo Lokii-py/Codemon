@@ -41,7 +41,6 @@ void Contestant::updateCodemon(const Codemon& codemon) {
 
     for (int i = 0; i < codemonCount; i++) { // can't add codemon with same name
         if (pocket[i].getName() == codemon.getName()) {
-            std::cout << "Codemon with the same name already exists. Can't add Codemon.\n";
             return;
         }
     }
@@ -80,8 +79,7 @@ void Contestant::selectCodemons() {
     for (int i = 0; i < 3; i++) {
         std::string codemonName, type;
         int level, hp;
-
-        std::cin.ignore();
+        
         std::cout << "Enter Codemon #" << i + 1 << " name: "; // taking in parameters
         std::getline(std::cin, codemonName);
         std::cout << "Enter type: ";
@@ -106,9 +104,9 @@ void Contestant::selectCodemons() {
             int damage;
 
             std::cin.ignore();
-            std::cout << "  Enter skill name: "; // taking in skills info
+            std::cout << "Enter skill name: "; // taking in skills info
             std::getline(std::cin, skillName);
-            std::cout << "  Enter base damage: ";
+            std::cout << "Enter base damage: ";
             std::cin >> damage;
             std::cin.ignore();
 
@@ -186,9 +184,11 @@ void Contestant::generateCodemons() {
 
             std::string skillName;
             int damage;
+            
+            int skillindex = rand() % 12;
 
-            skillName = CODEMON_SKILLS[random];
-            damage = CODEMON_SKILL_DAMAGE[rand() % 12];
+            skillName = CODEMON_SKILLS[skillindex];
+            damage = CODEMON_SKILL_DAMAGE[skillindex];
 
             Skill skill(skillName, damage); // intializes skill
             codemon.addSkill(skill);        // then adds skill
