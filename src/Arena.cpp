@@ -1,4 +1,5 @@
 #include "Arena.h"
+#include "Codemon.h"
 #include <iostream>
 #include <cstdlib>
 using namespace std;
@@ -12,7 +13,9 @@ Arena::Arena() {
     }
     generateTerrain();
     curRow = -1; // not placed yet
-    curRow = -1;
+    curCol = -1;
+    eneRow = -1;
+    eneCol = -1;
 }
 
 void Arena::generateTerrain() {
@@ -66,7 +69,7 @@ bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
     }
 
     return false;
-};
+}
 
 void Arena::printTerrainForDebug() const {
     // Print the terrain map for debugging
@@ -81,11 +84,6 @@ void Arena::printTerrainForDebug() const {
 
 
 void Arena::updateVisibility(int x, int y) {
-    for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j < SIZE; ++j) {
-            visibleMap[i][j] = '#';
-        }
-    }
     for (int i = -1; i <= 1; ++i) {
         for (int j = -1; j <= 1; ++j) {
             int nx = x + i;
@@ -99,8 +97,11 @@ void Arena::updateVisibility(int x, int y) {
 void Arena::setTerrainTile(const int n_row, const int n_col, const char c) {
     if (curRow != -1 && curCol != -1) {
         visibleMap[curRow][curCol] = terrainMap[curRow][curCol]; // replaces old spot with terain symbol if not first move
+        occupied[curRow][curCol] = false;
     }
     visibleMap[n_row][n_col] = c;
+    curRow = n_row;
+    curCol = n_col;
     return;
 }
 
@@ -114,4 +115,16 @@ void Arena::printVisibleMap() const {  // I know it is not "void Contestant::pri
     }
     std::cout << "==========\n";
 }
- 
+
+bool Arena::isEnemyInRange(int& row, int& col, Arena& arena) {
+    for (int i = row - 1; i <= row + 1; ++i) {
+        for (int j = col - 1; j <= col + 1; ++j) {
+            if (i >= 0 && i < SIZE && j >= 0 && j < SIZE) {
+                if (i == eneRow && j == eneCol) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}

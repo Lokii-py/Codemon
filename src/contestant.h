@@ -9,17 +9,19 @@ private:
     std::string name;
     int codemonCount;
     Codemon pocket[3];
+    Codemon currentCodemon;
+    bool alive;
 
 public:
     // Constructors
     // Desc: This is default constructor that asks only the contestant's name
     // Pre: None
-    // Post: Assigns contestant’s name from input and sets the number of Codémons and items owned to 0. 
+    // Post: Assigns contestant�s name from input and sets the number of Cod�mons and items owned to 0. 
     Contestant(); // Default constructor
 
     // Desc: This is a constructor that allows for the input to be passed in as value.
     // Pre: need string arguement
-    // Post: Takes argument for the name and sets the number of Codémons and items owned to 0. 
+    // Post: Takes argument for the name and sets the number of Cod�mons and items owned to 0. 
     Contestant(std::string n); // paremeterized constructor
 
     // Desc: This is a copy constructor that asks for a new name 
@@ -33,33 +35,48 @@ public:
     // Post: returns string of contestant name
     std::string getName() const;
 
-    // Desc: This function updates a contestant's pocket by adding a new Codémon info. 
+    // Desc: This function returns the number of Cod�mons the contestant has
+    // Pre: None
+    // Post: Returns the value of codemonCount
+    int getCodemonCount() const;
+
+    // Desc: This function updates a contestant's pocket by adding a new Cod�mon info. 
     // Pre: need a codemon parameter
     // Post: If pocket is not full and codemon does not already exist, it adds 
     void updateCodemon(const Codemon&);
 
-
-    // Desc: This function gets the contestant ready for battle by adding Codémons and items.
+    // Desc: This function allows for the player to select their codemons
     // Pre: none
-    // Post: updates the Codémons in the pocket and the items in the backpack. Prompt the user for update one by one until the user doesn’t want to anymore or when full
-    //void prepare();
-
-
-    ////////////  overload << to print
-    // Desc: This function prints the contestant info nicely.
-    // Pre: none
-    // Post: sorts pocket and backpack then prints each 
-    void print();
-
-    // Desc: This function 
-    // Pre: none
-    // Post: 
+    // Post: asks player to creat three codemons and assigns them to their pocket
     void selectCodemons();
 
-    // Desc: This function .
+    // Desc: This function generates three random codemons
     // Pre: none
-    // Post: 
+    // Post: generates and assignns random codemons
     void generateCodemons();
+
+    // Desc: This function kills the object and ends the game
+    // Pre: none
+    // Post: sets alive to false
+    void death();
+
+    // Desc: This function returns the status of the player
+    // Pre: none
+    // Post: returns bool of isAlive
+    bool isAlive();
+
+    
+    // Desc: This function overloads the << operator to print
+    // Pre: need os and codemon parameter
+    // Post: prints a codemon stats
+    friend std::ostream& operator<<(std::ostream& os, const Codemon& c);
+
+    // Desc: This friend function runs the battle
+    // Pre: needs contestants and arena
+    // Post: returns nothing but edits contestants
+    friend void battle(Contestant& player, Contestant& comp, Arena& arena);
+
 };
 
 #endif
+

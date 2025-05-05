@@ -39,7 +39,7 @@ void Skill::print() const {
 }
 
 //New function to calculate effective damage based on type chart
-double Skill::getEffectiveDamage(const Codemon& attacker, const Codemon& defender) const {
+double Skill::getEffectiveDamage(const Codemon& attacker, const Codemon& defender) {
     int attackerType = attacker.getTypeIndex();
     int defenderType = defender.getTypeIndex();
     return baseDamage * typeChart[attackerType][defenderType];
