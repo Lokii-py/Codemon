@@ -6,64 +6,63 @@
 class Arena {
 private:
     static const int SIZE = 12;
-	char terrainMap[SIZE][SIZE]; // 2D array for terrain
+	char terrainMap[SIZE][SIZE];
 	bool occupied[SIZE][SIZE];
 	char visibleMap[SIZE][SIZE];
 	int curRow, curCol;
 	int eneRow, eneCol;
 	
-	//Desc: This function will generate the terrain map for he arena
-    //pre: None
-    //post: Generates a 12 * 12 grid of terrain types
-    // 'F' = Forest, 'M' = Mountain, 'P' = Plain, 'W' = Water, 'S' = Swamp
-    void generateTerrain();
+	//Desc:Generates the terrain map using valid terrain symbols
+	//Pre:None
+	//Post:Each tile is initialized with a type, avoiding same-type neighbors
+	void generateTerrain();
     
 public:
-    //Desc: This default constructor
-    //pre: None
-    //post: Generates a 5 * 5 arena
+    //Desc:Default constructor
+    //Pre:None
+    //Post:Initializes visibility and occupation arrays, then generates terrain
+    //Stores the full terrain map (F, M, P, W, S)
     Arena();
     
-    // Desc: This edits the visibility
-    // Pre: needs position coordinates
-    // Post: sets visibility around coordinates
+    //Desc:Updates visibility around a Codémon (3x3 area) and overlays symbol at current position
+    //Pre:x, y are Codémon coordinates; c is the Codémon symbol (e.g., '@')
+    //Post:Updates the visibleMap with terrain and symbol in current position
     void updateVisibility(int x, int y, char c);
     
-    // Desc: This function prints the visible map
-    // Pre: none
-    // Post: prints each character of visible map object
+    //Desc:Prints the visible portion of the battlefield to console
+    //Pre:None
+    //Post:Shows revealed terrain and Codémon symbols, hides unexplored tiles with '#'
     void printVisibleMap() const;
 
-    //Desc: This function will generate True if codemon is already there
-    //Pre: None
-    //Post: Returns Boolean value
+    //Desc:Checks if a tile is already occupied
+    //Pre:row and col are within bounds
+    //Post:Returns true if the tile is currently occupied
     bool isOccupied(int row, int col) const;
     
-    //Desc: checks if tile has same type neighbor
-    //Pre: x, t are integer and type is char
-    //Post: Check for neighbors (top, bottom, left right) to ensure they are not same type
+    //Desc:Checks if a given terrain type exists adjacent to (x, y)
+    //Pre:x, y are coordinates; type is terrain character to avoid
+    //Post:Returns true if a neighbor has the same terrain type
     bool hasSameTypeNeighbor(int x, int y, char type) const;
 
-    //Desc: This function will reserve a tile
-    //Pre: row and col are integers
-    //Post: None
+    //Desc:Marks a tile as occupied
+    //Pre:row and col are within bounds
+    //Post:Sets occupied[row][col] to true
     void markOccupied(int row, int col);
 
-    //Desc: This function will return back the terrain tile
-    //Pre: Row and col are integers
-    //Post: Return 'F' = Forest, 'M' = Mountain, 'P' = Plain, 'W' = Water, 'S' = Swamp
+    //Desc:Returns the terrain type at a given location
+    //Pre:row and col are within bounds
+    //Post:Returns terrainMap[row][col]
     char getTerrainTile(int row, int col) const;
 
-    // Desc: This sets the terrain tile
-    // Pre: needs int of row and column. Also character
-    // Post: sets position with characer
+    //Desc:Moves the Codémon to a new tile and updates terrain visibility
+    //Pre:n_row and n_col specify the new coordinates; c is the Codémon symbol
+    //Post:Clears old position, places Codémon in new tile, updates visibility
     void setTerrainTile(const int n_row, const int n_col, const char c);
 
-    // Desc: This checks to see if the enemy is in range
-    // Pre: needs position coordinates and arena parameters
-    // Post: returns true if enemy is in range
+    //Desc:Checks if enemy Codémon is in adjacent tile (3x3 zone)
+    //Pre:row, col are current player Codémon coordinates
+    //Post:Returns true if enemy is found in surrounding tiles
     bool isEnemyInRange(int row, int col) const;
-
 };
 
 #endif
