@@ -5,15 +5,18 @@
 
 class Arena {
 private:
-    static const int SIZE = 5;
+    static const int SIZE = 12;
     char terrainMap[SIZE][SIZE]; // 2D array for terrain
-    bool occupied[SIZE][SIZE]{};
+    bool occupied[SIZE][SIZE];
     char visibleMap[SIZE][SIZE];
-    int curRow;
-    int curCol;
-    
-public:
+    int curRow, curCol;
+    int eneRow, eneCol;
 
+
+public:
+    //Desc: This default constructor
+    //pre: None
+    //post: Generates a 5 * 5 arena
     Arena();
 
     //Desc: This function will generate the terrain map for he arena
@@ -44,13 +47,36 @@ public:
     //for debugging
     void printTerrainForDebug() const;
 
-    
+    // Desc: This sets the terrain tile
+    // Pre: needs int of row and column. Also character
+    // Post: sets position with characer
     void setTerrainTile(const int n_row, const int n_col, const char c);
-    
-    
+
+
+    // Desc:
+    // Pre: 
+    // Post: 
+    void clearPreviousTile();
+
+    // Desc:
+    // Pre: 
+    // Post: 
+    void updateCurrentPosition(const int n_row, const int n_col);
+
+    // Desc: This edits the visibility
+    // Pre: needs position coordinates
+    // Post: sets visibility around coordinates
     void updateVisibility(int x, int y);
-    
+
+    // Desc: This function prints the visible map
+   // Pre: none
+   // Post: prints each character of visible map object
     void printVisibleMap() const;
+
+    // Desc: This checks to see if the enemy is in range
+   // Pre: needs position coordinates and arena parameters
+   // Post: returns true if enemy is in range
+    bool isEnemyInRange(int& row, int& col, Arena& arena);
 
 
 };

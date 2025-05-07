@@ -9,12 +9,14 @@ Contestant::Contestant() {
     std::cout << "Enter contestant name: ";
     std::getline(std::cin, name);
     codemonCount = 0;
+    alive = true;
 }
 
 // Parameterized constructor
 Contestant::Contestant(std::string n) {
     name = n;
     codemonCount = 0;
+    alive = true;
 }
 
 // Copy constructor
@@ -26,14 +28,19 @@ Contestant::Contestant(const Contestant& clone) {
 
     for (int i = 0; i < codemonCount; ++i) // copies over all data
         pocket[i] = clone.pocket[i];
+    alive = true;
 }
- 
+
 std::string Contestant::getName() const {
     return name;
 }
 
-void Contestant::updateCodemon(const Codemon& codemon) {
+int Contestant::getCodemonCount() const {
+    return codemonCount;
+}
 
+
+void Contestant::updateCodemon(const Codemon& codemon) {
     if (codemonCount >= 10) {
         std::cout << "Pocket is full.\n"; // can't add more than 10 codemons
         return;
@@ -47,34 +54,8 @@ void Contestant::updateCodemon(const Codemon& codemon) {
     }
 
     pocket[codemonCount++] = codemon;  // assigns codemon at index then increases count
-    
-}
-
-void Contestant::print() {
-    std::cout << "\nContestant name: " << name << "\n";
-    std::cout << "Number of Codemons owned: " << codemonCount << "\n";
-
-    // Sort pocket by level
-    for (int i = 0; i < codemonCount - 1; i++) {  // bubble sort method
-        for (int j = 0; j < codemonCount - i - 1; j++) {
-            if (pocket[j].getLevel() > pocket[j + 1].getLevel()) {
-                Codemon temp = pocket[j];
-                pocket[j] = pocket[j + 1];
-                pocket[j + 1] = temp;
-            }
-        }
-    }
-
-    std::cout << "Pocket list (sorted by level):\n"; // prints out pocket
-    for (int i = 0; i < codemonCount; i++) {
-        std::cout << "  " << (i + 1) << ") ";
-        pocket[i].print();
-    }
 
 }
-
-
-/////////////////////////////////
 
 void Contestant::selectCodemons() {
     for (int i = 0; i < 3; i++) {
@@ -182,22 +163,49 @@ void Contestant::generateCodemons() {
         Codemon codemon(codemonName, type, level, hp); // initializes codemon with values
 
         // Add Skills to Codémon
-        for (int i = 0; i < 6; i++) {
+        std::string skillName;
+        int damage;
 
-            std::string skillName;
-            int damage;
+        skillName = CODEMON_SKILLS[random];
+        damage = CODEMON_SKILL_DAMAGE[rand() % 12];
 
-            skillName = CODEMON_SKILLS[random];
-            damage = CODEMON_SKILL_DAMAGE[rand() % 12];
+        Skill skill(skillName, damage); // intializes skill
+        codemon.addSkill(skill);        // then adds skill
 
-            Skill skill(skillName, damage); // intializes skill
-            codemon.addSkill(skill);        // then adds skill
-        }
 
         updateCodemon(codemon); // adds codemon
 
     }
 
+}
+
+void Contestant::death() {
+    codemonCount -= 1;
+    if (codemonCount == 0) {
+        alive = false;
+    }
+    return;
+}
+
+bool Contestant::isAlive() {
+    return alive;
+}
+
+std::ostream& operator<<(std::ostream& os, const Codemon& c) {
+    os << "Name: " << c.getName() << "\n";
+    os << "Type: " << c.getType() << "\n";
+    os << "Level: " << c.getLevel() << "\n";
+    os << "HP: " << c.getCurrentHP() << "/" << c.getMaxHP() << "\n";
+    return os;
+}
+
+Codemon& Contestant::getActiveCodemon() {
+    if (codemonCount > 0) {
+        return pocket[codemonCount - 1];
+    }
+    else {
+        std::cout << "No active Codemon remaining.";
+    }
 }
 
 

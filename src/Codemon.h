@@ -1,16 +1,21 @@
 #ifndef CODEMON_H
 #define CODEMON_H
- 
+
 #include "skill.h"
 #include <iostream>
 #include <string>
+
+class Arena;
+class Contestant;
+class Skill;
 
 class Codemon {
 private:
     std::string name;
     std::string type;
     int level;
-    int hp;
+    int maxHP;
+    int currentHP;
     Skill skills[6];
     int skillCount;
 
@@ -48,15 +53,61 @@ public:
     // Post: checks if skills is already possessed then adds it to codemon skill array
     void addSkill(const Skill&);
 
-    ////////////  overload << to print
-    // Desc: This functions sorts the skill by base damage then prints it out nicely
-    // Pre: None
-    // Post: uses bubble sort to order skills by increasing base damage then prints it out
-    void print();
+    // Desc: This functions overloads the << operator
+    // Pre: takes os and Codemon
+    // Post: prints output nicely
+    friend std::ostream& operator<<(std::ostream& os, const Codemon& c);
 
 
+    // Desc: This functions returns the int of type index
+    // Pre: none
+    // Post: returns int of type index
     int getTypeIndex() const;
 
+
+    // Desc: This functions returns the string of the Codemon type
+    // Pre: none
+    // Post:  returns the string of the Codemon type
+    std::string getType() const { return type; }
+
+
+    // Desc: This functions returns the int of current HP
+    // Pre: none
+    // Post: returns the int of current HP
+    int getCurrentHP() const { return currentHP; }
+
+    // Desc: This functions returns the int of max HP
+    // Pre: none
+    // Post: returns the int of max HP
+    int getMaxHP() const { return maxHP; }
+
+    // Desc: This functions overloads - operator and returns a copied Codemon
+    // Pre: need int of damage
+    // Post: returns copied codemon with lowered hp
+    Codemon operator-(int damage) const {
+        Codemon copy = *this;  // calling object
+        copy.currentHP = copy.currentHP - damage;
+        if (copy.currentHP < 0) {
+            copy.currentHP = 0;
+        }
+        return copy;
+    }
+
+    // Desc: This functions overloads -= operator 
+   // Pre: need int of damage
+   // Post: returns  codemon with lowered hp
+    Codemon& operator-=(int damage) {
+        currentHP = currentHP - damage;
+        if (currentHP < 0) {
+            currentHP = 0;
+        }
+        return *this;
+    }
+
+    // Desc: This friend function runs the battle
+    // Pre: needs contestants and arena
+    // Post: returns nothing but edits contestants
+    friend void battle(Contestant& player, Contestant& comp, Arena& arena, int row, int col);
 
     friend class Arena;
 };

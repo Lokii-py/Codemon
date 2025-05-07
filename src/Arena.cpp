@@ -1,4 +1,5 @@
 #include "Arena.h"
+#include "Codemon.h"
 #include <iostream>
 #include <cstdlib>
 using namespace std;
@@ -12,15 +13,17 @@ Arena::Arena() {
     }
     generateTerrain();
     curRow = -1; // not placed yet
-    curRow = -1;
+    curCol = -1;
+    eneRow = -1;
+    eneCol = -1;
 }
 
 void Arena::generateTerrain() {
     // Fill terrainMap with valid terrain
     char terrainTypes[] = { 'F', 'M', 'P', 'W', 'S' }; // 'F' = Forest, 'M' = Mountain, 'P' = Plain, 'W' = Water, 'S' = Swamp
     // Initialize terrain grid
-    for (int i = 0; i < 5; i++) {
-        for (int j = 0; j < 5; j++) {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
             // Randomly pick a terrain type for this cell
             char newType;
             do {
@@ -66,13 +69,13 @@ bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
     }
 
     return false;
-};
+}
 
 void Arena::printTerrainForDebug() const {
     // Print the terrain map for debugging
     cout << "Terrain Map:\n";
-    for (int i = 0; i < 5; ++i) {
-        for (int j = 0; j < 5; ++j) {
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
             cout << terrainMap[i][j] << " ";
         }
         cout << "\n";
@@ -81,9 +84,9 @@ void Arena::printTerrainForDebug() const {
 
 
 void Arena::updateVisibility(int x, int y) {
-    for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j < SIZE; ++j) {
-            visibleMap[i][j] = '#';
+    for (int r = 0; r < SIZE; ++r) {
+        for (int c = 0; c < SIZE; ++c) {
+            visibleMap[r][c] = '#';
         }
     }
     for (int i = -1; i <= 1; ++i) {
@@ -97,21 +100,41 @@ void Arena::updateVisibility(int x, int y) {
 }
 
 void Arena::setTerrainTile(const int n_row, const int n_col, const char c) {
-    if (curRow != -1 && curCol != -1) {
-        visibleMap[curRow][curCol] = terrainMap[curRow][curCol]; // replaces old spot with terain symbol if not first move
-    }
     visibleMap[n_row][n_col] = c;
-    return;
+}
+
+void Arena::clearPreviousTile() {
+    if (curRow != -1 && curCol != -1) {
+        visibleMap[curRow][curCol] = terrainMap[curRow][curCol];
+        occupied[curRow][curCol] = false;
+    }
+}
+
+void Arena::updateCurrentPosition(const int n_row, const int n_col) {
+    curRow = n_row;
+    curCol = n_col;
 }
 
 void Arena::printVisibleMap() const {  // I know it is not "void Contestant::printVisibleMap() const"
     // Print the visible map
-    for (int i = 0; i < 5; ++i) {
-        for (int j = 0; j < 5; ++j) {
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
             cout << visibleMap[i][j] << " ";
         }
         cout << "\n";
     }
     std::cout << "==========\n";
 }
- 
+
+bool Arena::isEnemyInRange(int& row, int& col, Arena& arena) {
+    for (int i = row - 1; i <= row + 1; ++i) {
+        for (int j = col - 1; j <= col + 1; ++j) {
+            if (i >= 0 && i < SIZE && j >= 0 && j < SIZE) {
+                if (i == eneRow && j == eneCol) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}

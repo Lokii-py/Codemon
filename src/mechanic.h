@@ -1,6 +1,8 @@
 #ifndef MECHANIC_H
 #define MECHANIC_H
 #include "Arena.h"
+#include "contestant.h"
+
 
 /*
 Contestant can either:
@@ -20,9 +22,16 @@ D - Right   | C - Down Right
 -----------------------------
 - Implement Random Movement for Computer
 - This will take the current position of codemon */
-void movement(char move, int& row, int& col, Arena& arena);
 
-/*This  will check if the enemy in in range and start a battle session*/
-bool isEnemyInRange(int& row, int& col, Arena& arena);
+//Desc: This function move the codemon aroun the arena
+//pre: needs a move direction, coordinates, and arena
+//post: moves codemon to new spot based of input move
+void movement(const char move, int& row, int& col, Arena& arena);
+
+
+// Desc: This friend function runs the battle
+// Pre: needs contestants and arena
+// Post: returns nothing but edits contestants
+void battle(Contestant& player, Contestant& comp, Arena& arena, int row, int col);
 
 #endif
