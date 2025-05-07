@@ -1,6 +1,5 @@
 #ifndef CONTESTANT_H
 #define CONTESTANT_H
- 
 #include "Codemon.h"
 #include <string>
 
@@ -35,12 +34,12 @@ public:
     // Post: returns string of contestant name
     std::string getName() const;
 
-    // Desc: This function returns the number of Cod�mons the contestant has
+    // Desc: This function returns the number of Codémons the contestant has
     // Pre: None
     // Post: Returns the value of codemonCount
     int getCodemonCount() const;
 
-    // Desc: This function updates a contestant's pocket by adding a new Cod�mon info. 
+    // Desc: This function updates a contestant's pocket by adding a new Codémon info. 
     // Pre: need a codemon parameter
     // Post: If pocket is not full and codemon does not already exist, it adds 
     void updateCodemon(const Codemon&);
@@ -65,16 +64,26 @@ public:
     // Post: returns bool of isAlive
     bool isAlive();
 
-    
+    // Desc: This function returns the status of the player
+    // Pre: none
+    // Post: returns bool of isAlive
+    bool isAlive();
+
     // Desc: This function overloads the << operator to print
     // Pre: need os and codemon parameter
     // Post: prints a codemon stats
     friend std::ostream& operator<<(std::ostream& os, const Codemon& c);
 
+    // Desc: This function returns the current codemon being used by the player
+    // Pre: none
+    // Post: returns Codemon type of active codemon
+    Codemon& getActiveCodemon();
+
+
     // Desc: This friend function runs the battle
     // Pre: needs contestants and arena
     // Post: returns nothing but edits contestants
-    friend void battle(Contestant& player, Contestant& comp, Arena& arena);
+   // friend void battle(Contestant& player, Contestant& comp, Arena& arena);
 
 };
 

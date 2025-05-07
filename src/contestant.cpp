@@ -30,7 +30,7 @@ Contestant::Contestant(const Contestant& clone) {
         pocket[i] = clone.pocket[i];
     alive = true;
 }
- 
+
 std::string Contestant::getName() const {
     return name;
 }
@@ -54,7 +54,6 @@ void Contestant::updateCodemon(const Codemon& codemon) {
     }
 
     pocket[codemonCount++] = codemon;  // assigns codemon at index then increases count
-    
 }
 
 void Contestant::selectCodemons() {
@@ -162,7 +161,7 @@ void Contestant::generateCodemons() {
 
         Codemon codemon(codemonName, type, level, hp); // initializes codemon with values
 
-        // Add Skills to Cod�mon
+        // Add Skills to Codémon
         std::string skillName;
         int damage;
 
@@ -171,7 +170,6 @@ void Contestant::generateCodemons() {
 
         Skill skill(skillName, damage); // intializes skill
         codemon.addSkill(skill);        // then adds skill
-        
 
         updateCodemon(codemon); // adds codemon
 
@@ -198,4 +196,14 @@ std::ostream& operator<<(std::ostream& os, const Codemon& c) {
     os << "HP: " << c.getCurrentHP() << "/" << c.getMaxHP() << "\n";
     return os;
 }
+
+Codemon& Contestant::getActiveCodemon() {
+    if (codemonCount > 0) {
+        return pocket[codemonCount - 1];
+    }
+    else {
+        std::cout << "No active Codemon remaining.";
+    }
+}
+
 

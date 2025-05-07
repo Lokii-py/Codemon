@@ -1,6 +1,7 @@
 #include "Codemon.h"
 #include "skill.h"
 
+/*
 // Member Function Definitions
 // Private functions 
 void Codemon::evolve() {
@@ -15,7 +16,7 @@ void Codemon::evolve() {
         skills[index].increaseDamage(boost);
     }
 }
- 
+
 // Public functions 
 // Default constructor
 Codemon::Codemon() {
@@ -31,7 +32,7 @@ Codemon::Codemon() {
 Codemon::Codemon(const std::string n, const std::string t, const int l, const int hpp) {
     name = n;
     type = t;
-    level = l; 
+    level = l;
     maxHP = hpp;
     currentHP = hpp;
     skillCount = 0;
@@ -46,7 +47,7 @@ int Codemon::getLevel() const {
 }
 
 void Codemon::addSkill(const Skill& s) { //called from prepare function
-    for (int i = 0; i < skillCount; i++) // checks if skills is already possessed
+    for (int i = 0; i < skillCount; ++i) // checks if skills is already possessed
         if (skills[i].getName() == s.getName()) {
             std::cout << "Skill already known by Codemon. Can't add skill.\n";
             return;
@@ -75,3 +76,23 @@ int Codemon::getTypeIndex() const {
     std::cout << "type index not found";
     return -1;
 }
+
+void Codemon::print() {
+    /*std::cout << name << " (Type: " << type << ", Level: " << level << ", HP: " << hp << ")\n";
+    std::cout << "  Skills (sorted by base damage):\n";
+    // Sort skills by base damage
+    for (int i = 0; i < skillCount - 1; ++i) { // bubble sort method
+        for (int j = 0; j < skillCount - i - 1; ++j) {
+            if (skills[j].getBaseDamage() > skills[j + 1].getBaseDamage()) {
+                Skill temp = skills[j];
+                skills[j] = skills[j + 1];
+                skills[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < skillCount; ++i)
+        skills[i].print();
+    
+}
+*/

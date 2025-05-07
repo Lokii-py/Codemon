@@ -1,6 +1,6 @@
 #ifndef CODEMON_H
 #define CODEMON_H
- 
+
 #include "skill.h"
 #include <iostream>
 #include <string>
@@ -56,7 +56,7 @@ public:
     // Desc: This functions overloads the << operator
     // Pre: takes os and Codemon
     // Post: prints output nicely
-    friend std::ostream& operator<<(std::ostream& os, const Codemon& c); 
+    friend std::ostream& operator<<(std::ostream& os, const Codemon& c);
 
 
     // Desc: This functions returns the int of type index
@@ -107,7 +107,7 @@ public:
     // Desc: This friend function runs the battle
     // Pre: needs contestants and arena
     // Post: returns nothing but edits contestants
-    friend void battle(Contestant& player, Contestant& comp, Arena& arena);
+    friend void battle(Contestant& player, Contestant& comp, Arena& arena, int row, int col);
 
     friend class Arena;
 };

@@ -1,5 +1,6 @@
 #include "mechanic.h"
 #include "Arena.h"
+#include "Codemon.h"
 
 #include <iostream>
 #include <string>
@@ -10,7 +11,7 @@ using namespace std;
 void movement(const char move, int& row, int& col, Arena& arena) {
     int n_row = row;
     int n_col = col;
-     
+
     switch (move) {
     case 'W':
         n_row = row + 1;
@@ -50,63 +51,86 @@ void movement(const char move, int& row, int& col, Arena& arena) {
         return;
     }
 
-    // Example check � tile is not blocked (optional)
+    // Example check — tile is not blocked (optional)
     if (arena.isOccupied(n_row, n_col)) {
         cout << "Tile occupied." << endl;
         return;
     }
-    arena.setTerrainTile(row, col, '#');
-    arena.updateVisibility(n_row, n_col);
+
+    arena.clearPreviousTile();
+
+    // Update new position
     arena.setTerrainTile(n_row, n_col, '@');
+    arena.markOccupied(n_row, n_col);
+    arena.updateCurrentPosition(n_row, n_col);
+    arena.updateVisibility(n_row, n_col);
+
+    // Update caller's position variables
     row = n_row;
     col = n_col;
-    arena.markOccupied(row, col);
 }
 
 
+void battle(Contestant& player, Contestant& comp, Arena& arena, int row, int col) {
+    Codemon& pCodemon = player.getActiveCodemon();
+    Codemon& cCodemon = comp.getActiveCodemon();
 
+    // Get terrain type at current battle location
+    char terrain = arena.getTerrainTile(row, col);
 
-void battle(Contestant& player, Contestant& comp, Arena& arena) {
-    int playerCount = player.getCodemonCount() - 1;
-    int compCount = comp.getCodemonCount() - 1;
-    int playerDamage = player.pocket[playerCount].skills[0].getBaseDamage();
-    int compDamage = comp.pocket[compCount].skills[0].getBaseDamage();
+    int basePlayerDamage = pCodemon.skills[0].getBaseDamage();
+    int baseCompDamage = cCodemon.skills[0].getBaseDamage();
 
-    bool playerAlive = true;
-    bool compAlive = true;
+    // Apply terrain advantage: +10 if Codémon matches terrain type
+    int playerDamage = basePlayerDamage;
+    int compDamage = baseCompDamage;
 
-    do {
-        // codemon battles with 
-        // subtract skill damage from each codemon hp
-        player.pocket[playerCount] -= compDamage;
-        comp.pocket[compCount] -= playerDamage;
-
-        if (player.pocket[playerCount].getCurrentHP() == 0) {
-            playerAlive = false;
-            std::cout << "Player codemon has died.\n";
-            player.death();
-        }
-
-        if (comp.pocket[compCount].getCurrentHP() == 0) {
-            compAlive = false;
-            std::cout << "Computer codemon has died.\n";
-            comp.death();
-
-        }
-
-        
-    } while (playerAlive == true && compAlive == true);//while codemon hp is > 0
-
-
-    std::cout << player.pocket[playerCount];
-    std::cout << comp.pocket[compCount];
-
-    if (player.getCodemonCount() == 0) {
-        std::cout << "Player has died.\n";
-
+    if (pCodemon.getType()[0] == terrain) {
+        playerDamage += 10;
+        cout << "Player Codemon gains terrain advantage! +" << 10 << " damage.\n";
     }
-    if (comp.getCodemonCount() == 0) {
-        std::cout << "Computer has died.\n";
+    if (cCodemon.getType()[0] == terrain) {
+        compDamage += 10;
+        cout << "Computer Codemon gains terrain advantage! +" << 10 << " damage.\n";
     }
-    return;
+
+    cout << "Battle Start: \n";
+    cout << "Player Codemon: " << pCodemon.getName() << " vs Computer Codemon: " << cCodemon.getName() << "\n";
+
+    while (pCodemon.getCurrentHP() > 0 && cCodemon.getCurrentHP() > 0) {
+        // Each Codémon attacks the other
+        pCodemon -= compDamage;
+        cCodemon -= playerDamage;
+
+        // Display current HP
+        cout << "After this round:\n";
+        cout << "Player Codemon HP: " << pCodemon.getCurrentHP() << "\n";
+        cout << "Computer Codemon HP: " << cCodemon.getCurrentHP() << "\n";
+    }
+
+    // Handle fainting
+    if (pCodemon.getCurrentHP() <= 0) {
+        cout << "Player's Codemon " << pCodemon.getName() << " has fainted.\n";
+        player.death();
+    }
+    if (cCodemon.getCurrentHP() <= 0) {
+        cout << "Computer's Codemon " << cCodemon.getName() << " has fainted.\n";
+        comp.death();
+    }
+
+    // Print new active Codémons (if any left)
+    if (player.isAlive()) {
+        cout << "New Player Codemon:\n" << player.getActiveCodemon();
+    }
+    if (comp.isAlive()) {
+        cout << "New Computer Codemon:\n" << comp.getActiveCodemon();
+    }
+
+    // Endgame check
+    if (!player.isAlive()) {
+        cout << "All Player Codémons have been defeated.\n";
+    }
+    if (!comp.isAlive()) {
+        cout << "All Computer Codémons have been defeated.\n";
+    }
 }
