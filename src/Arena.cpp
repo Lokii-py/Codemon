@@ -62,19 +62,10 @@ bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
     if (x > 0 && terrainMap[x - 1][y] == type) {
         return true;
     }
-    // Bottom
-    if (x < (SIZE-1) && terrainMap[x + 1][y] == type) {
-        return true;
-    }
     // Left
     if (y > 0 && terrainMap[x][y - 1] == type) {
         return true;
     }
-    // Right
-    if (y < (SIZE-1) && terrainMap[x][y + 1] == type) {
-        return true;
-    }
-
     return false;
 }
 
