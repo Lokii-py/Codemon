@@ -1,12 +1,16 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <string>
 #include <iostream>
+#include <fstream> 
+using namespace std;
 
 class Item {
 private:
     std::string name;
     std::string description;
+    string effectType; // "Heal", "Boost", or "Shield"
     int duration;
 
 public:
@@ -14,10 +18,11 @@ public:
     // Pre: None
     // Post: sets name to "Unnamed", description to "None", and duration to 0.
     Item();
+
     // Desc: This is a constructor that allows for the inputs of the item to be passed in as value.
     // Pre: need string arguements and int arguement
     // Post: Takes argument for the name, description, and duration and assigns them accordingly. 
-    Item(const std::string& name, const std::string& description, int duration);
+    Item(const std::string& n, const std::string& des, std::string& type, int dur);
 
     // Desc: This functions returns the duration of the item
     // Pre: none
@@ -28,6 +33,12 @@ public:
     // Pre: None
     // Post: formats and print line for each item
     void print() const;
+
+
+
+    friend void loadItemsFromFile(const string& filename, Item itemArray[], int maxSize);
+
+    //friend class Codemon;
 };
 
 #endif

@@ -1,8 +1,10 @@
 #ifndef SKILL_H
 #define SKILL_H
-#include "Codemon.h"
- 
+
 #include <iostream>
+#include <string>
+
+class Codemon;
 
 class Skill {
 private:
@@ -23,6 +25,7 @@ public:
     // Pre: none
     // Post: returns int base damage of skill
     int getBaseDamage() const;
+    
     // Desc: This functions returns the name of the skill
     // Pre: none
     // Post: returns string name of skill
@@ -41,7 +44,10 @@ public:
     //Desc: This function calculates the effective damage based on the type chart
     //Pre: attacker and defender are Codemon objects
     //Post: returns the effective damage as a double
-    double getEffectiveDamage(const Codemon& attacker, const Codemon& defender) const;
+    double getEffectiveDamage(const Codemon& attacker, const Codemon& defender);
+
+    friend class Codemon;
+    
 };
 
 #endif

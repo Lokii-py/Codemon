@@ -51,3 +51,5 @@ double Skill::getEffectiveDamage(const Codemon& attacker, const Codemon& defende
     int defenderType = defender.getTypeIndex();
     return baseDamage * typeChart[attackerType][defenderType];
 }
+
+

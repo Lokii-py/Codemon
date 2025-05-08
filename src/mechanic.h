@@ -2,7 +2,9 @@
 #define MECHANIC_H
 #include "Arena.h"
 #include "contestant.h"
-
+#include <string>
+#include <fstream>
+using namespace std;
 
 /*
 Contestant can either:
@@ -28,10 +30,13 @@ D - Right   | C - Down Right
 //post: moves codemon to new spot based of input move
 void movement(const char move, int& row, int& col, Arena& arena);
 
-
 // Desc: This friend function runs the battle
 // Pre: needs contestants and arena
 // Post: returns nothing but edits contestants
 void battle(Contestant& player, Contestant& comp, Arena& arena, int row, int col);
+
+int countLinesInFile(const string& filename);
+
+
 
 #endif

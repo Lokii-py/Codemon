@@ -1,7 +1,7 @@
 // Programmer: Henry Campbell (id: 12619823;hmcngb) and Lokesh Das (id: 12631232;ldd3g)
-// Date: 4/25/25
+// Date: 4/5/25
 // File: main.cpp
-// Assignment: HW7
+// Assignment: Final 
 // Purpose: This is the Codemon simulation game player.
 
 #include "Arena.h"
@@ -13,14 +13,37 @@
 #include <cstring> // for strchr
 using namespace std;
 
+const int MAX_CONTESTANTS = 8;
+
 int main() {
-    srand(1025); // Set random seed once
+    srand(950); // Set random seed once
 
     Arena arena; // Initialize the battle arena
     Contestant player("Player"), computer("CPU"); // Initialize contestants
 
     arena.generateTerrain(); // Fill terrainMap with valid terrain
     arena.printTerrainForDebug(); // Debug view of full terrain
+
+    // Player setup
+    int numHumans, numAI;
+    do {
+        cout << "Enter number of human players: ";
+        cin >> numHumans;
+        cout << "Enter number of AI contestants: ";
+        cin >> numAI;
+    } while (numHumans + numAI < 2 || numHumans + numAI > MAX_CONTESTANTS);
+
+    int totalContestants = numHumans + numAI;
+
+    int codemonPerContestant;
+    cout << "How many Codémons per contestant? ";
+    cin >> codemonPerContestant;
+
+    ////////////////////////
+
+
+
+
 
     // Codémon selection
     char choice;
