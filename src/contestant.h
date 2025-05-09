@@ -64,11 +64,6 @@ public:
     // Post: returns bool of isAlive
     bool isAlive();
 
-    // Desc: This function returns the status of the player
-    // Pre: none
-    // Post: returns bool of isAlive
-    bool isAlive();
-
     // Desc: This function overloads the << operator to print
     // Pre: need os and codemon parameter
     // Post: prints a codemon stats
