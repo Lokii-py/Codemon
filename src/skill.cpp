@@ -20,13 +20,17 @@ const double typeChart[11][11] = {
 
 Skill::Skill() {
     name = " ";
+    type = " ";
+    description = " ";
     baseDamage = 0;
 }
 
 // Parameterized constructor
-Skill::Skill(const string& n, int baseDamage) {
+Skill(const std::string& name, const std::string& t, int baseDamage, const std::string& desc) {
     name = n;
+    type = t;
     this->baseDamage = baseDamage;
+    description = desc;
 }
 
 int Skill::getBaseDamage() const {
@@ -42,7 +46,9 @@ void Skill::increaseDamage(int percent) {
 }
 
 void Skill::print() const {
-    std::cout << "  - " << name << " (Damage: " << baseDamage << ")\n";
+    std::cout << "  - " << name
+            << " [" << type << "]  Dmg: " << baseDamage
+            << "  — " << description << '\n';
 }
 
 //New function to calculate effective damage based on type chart
