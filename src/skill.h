@@ -1,11 +1,13 @@
 #ifndef SKILL_H
 #define SKILL_H
  
+
 #include <iostream>
 #include <string>
 
 class Codemon;
 
+/*
 class Skill {
 private:
     std::string name;
@@ -18,13 +20,14 @@ public:
     Skill();
     // Desc: This is a constructor that allows for the inputs of the skill to be passed in as value.
     // Pre: need string arguement and int arguement
-    // Post: Takes argument for the name and base damage and assigns them accordingly.
+    // Post: Takes argument for the name and base damage and assigns them accordingly. 
     Skill(const std::string& name, int baseDamage);
 
     // Desc: This functions returns the base damage of the skill
     // Pre: none
     // Post: returns int base damage of skill
     int getBaseDamage() const;
+    
     // Desc: This functions returns the name of the skill
     // Pre: none
     // Post: returns string name of skill
@@ -45,5 +48,5 @@ public:
     //Post: returns the effective damage as a double
     double getEffectiveDamage(const Codemon& attacker, const Codemon& defender);
 };
-
+*/
 #endif
