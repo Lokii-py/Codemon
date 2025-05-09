@@ -26,7 +26,7 @@ void Item::print() const {
 }
 
 void loadItemsFromFile(const string& filename, Item itemArray[], int maxSize) {
-    ifstream fin(filename); // Open the file for reading 
+    ifstream fin(filename); // Open the file for reading
     if (!fin) {
         cerr << "Error: Could not open file " << filename << endl;
         exit(1); // Exit the program if the file can't be opened
@@ -43,12 +43,6 @@ void loadItemsFromFile(const string& filename, Item itemArray[], int maxSize) {
         getline(fin, type, ',');
         getline(fin, amountStr, ',');
         getline(fin, description); // Reads the remainder of the line (until newline)
-
-        // Debug output 
-        // cout << name << endl; 
-        // cout << type << endl; 
-        // cout << amountStr << endl; 
-        // cout << description << endl; 
 
         // Convert amount string to integer
         int amount = stoi(amountStr);
