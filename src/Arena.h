@@ -24,8 +24,12 @@ public:
     //Stores the full terrain map (F, M, P, W, S)
     Arena();
     
+    int getCurRow() const;
+
+    int getCurCol() const;
+
     //Desc:Updates visibility around a Codémon (3x3 area) and overlays symbol at current position
-    //Pre:x, y are Codémon coordinates; c is the Codémon symbol (e.g., '@')
+    //Pre:x, y are Codémon coordinates; c is the Codémon symbol
     //Post:Updates the visibleMap with terrain and symbol in current position
     void updateVisibility(int x, int y, char c);
     

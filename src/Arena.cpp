@@ -19,20 +19,30 @@ Arena::Arena() {
 }
 
 void Arena::generateTerrain() {
-    char terrainTypes[] = { 'F', 'M', 'P', 'W', 'S' }; 
+    // Fill terrainMap with valid terrain
+    char terrainTypes[] = { 'F', 'M', 'P', 'W', 'S' }; // 'F' = Forest, 'M' = Mountain, 'P' = Plain, 'W' = Water, 'S' = Swamp
+    // Initialize terrain grid
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             // Randomly pick a terrain type for this cell
             char newType;
             do {
-                newType = terrainTypes[rand() % 5]; 
-            } while (hasSameTypeNeighbor(i, j, newType)); // No same type neighbor
+                newType = terrainTypes[rand() % 5]; // Random terrain type
+            } while (hasSameTypeNeighbor(i, j, newType)); // Ensure no neighbor has the same type
 
             terrainMap[i][j] = newType;
         }
     }
 }
 
+int Arena::getCurRow() const{
+    return curRow;
+}
+
+int Arena::getCurCol() const{
+    return curCol;
+}
+    
 void Arena::updateVisibility(const int x,const int y, const char c) {
     for (int i = -1; i <= 1; ++i) {
         for (int j = -1; j <= 1; ++j) {
@@ -57,11 +67,12 @@ void Arena::printVisibleMap() const {  // I know it is not "void Contestant::pri
 }
 
 bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
-    // Check for neighbors (top, bottom, left, right) to ensure they are not the same type
+    // Check for neighbors top and left to ensure they are not the same type
     // Top
     if (x > 0 && terrainMap[x - 1][y] == type) {
-        return true;
+            return true;
     }
+    
     // Left
     if (y > 0 && terrainMap[x][y - 1] == type) {
         return true;
