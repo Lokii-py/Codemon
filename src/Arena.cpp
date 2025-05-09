@@ -44,6 +44,11 @@ int Arena::getCurCol() const{
 }
     
 void Arena::updateVisibility(const int x,const int y, const char c) {
+    //Resseting the visible Map
+    for (int r = 0; r < SIZE; ++r)
+        for (int c = 0; c < SIZE; ++c)
+            visibleMap[r][c] = '#';
+
     for (int i = -1; i <= 1; ++i) {
         for (int j = -1; j <= 1; ++j) {
             int nx = x + i;
