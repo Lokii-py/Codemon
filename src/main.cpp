@@ -4,6 +4,10 @@
 // Assignment: Final 
 // Purpose: This is the Codemon simulation game player.
 
+
+// remember to overload  == and !=
+
+
 #include "Arena.h"
 #include "contestant.h"
 #include "mechanic.h"
@@ -19,10 +23,9 @@ int main() {
     srand(950); // Set random seed once
 
     Arena arena; // Initialize the battle arena
-    Contestant player("Player"), computer("CPU"); // Initialize contestants
+    
 
     
-/*
     // Player setup
     int numHumans, numAI;
     do {
@@ -38,23 +41,62 @@ int main() {
     cout << "How many Codemons per contestant? ";
     cin >> codemonPerContestant;
 
+/*
+
+
+   --dynamically create an array of contestants and an array of Codémons for each contestant’s team.
+   -- initialize contesants-  do loop
+
+   1. computer controlled codemons read in
+   2. randomly assign to teams
+
    *////////////////////////
 
 
 
     
-
+    // same human player gameplay as HW7
+    // do loop for multiple players
     // Codémon selection
     char choice;
     cout << "PLAYER: Do you want custom selection of Codemons? (y/n): ";
     cin >> choice;
     if (choice == 'y' || choice == 'Y') {
-        player.selectCodemons(); // Choose 3 Codemons
+       // player.selectCodemons(); // Choose 3 Codemons
     }
     else {
-        player.generateCodemons(); // Random Codemons
+        //player.generateCodemons(); // Random Codemons
     }
-    computer.generateCodemons(); // CPU always uses random
+    //computer.generateCodemons(); // CPU always uses random
+
+    //SKILLS
+    //read in skills and assign randomly for the computer controlled contestants
+    // option player controlled contestants do loop
+
+
+    //ITEMS
+    //load items
+    //After reading the list of available items into a temporary array, 
+    // randomly select items from it to populate the shared item queue to its full capacity. 
+    // create shared item queue
+
+    // place items on battlefield
+
+    // initialize snuggledon
+    //Randomly place the active Codémons and Snuggladon
+
+
+    // main loop
+    // contestants take turns then snuggledon
+
+
+    //END
+    //
+
+
+
+
+    /////////////////////////////////// end of outline
 
     // Place Player Codemon
     int playerRow, playerCol;
