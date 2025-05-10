@@ -26,23 +26,21 @@ void Contestant::placeRandomCodemon(Arena& A) {
 	return;
 }
 
-Contestant::Contestant() {
-	teamsize = 3;
-	activeCodemon = 0;
-	row = -1;
-	col = -1;
-
-	cout << "Please enter your name: ";
-	getline(cin, playerName);
-
-	isHuman = true;
-
-	team = new Codemon[teamsize];
+Contestant::Contestant(){
+    playerName = " ";
+    isHuman = true;
+    row = -1;
+    col = -1;
 }
 
-Contestant::Contestant(string name, bool human){
+Contestant::Contestant(string name, bool human, int codemonNum){
     playerName = name;
     isHuman = human;
+    setTeamSize(codemonNum);
+    activeCodemon = 0;
+	row = -1;
+	col = -1;
+	team = new Codemon[teamsize];
 }
 
 Contestant::~Contestant() {

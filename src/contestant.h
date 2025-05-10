@@ -33,7 +33,7 @@ public:
     // Desc: This is a constructor that allows for the input to be passed in as value.
     // Pre: need string arguement
     // Post: Takes argument for the name and sets the number of Cod�mons and items owned to 0. 
-    Contestant(string name, bool human); // paremeterized constructor
+    Contestant(string name, bool human, int codemonNum); // paremeterized constructor
 
     ~Contestant();
 
