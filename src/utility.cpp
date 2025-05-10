@@ -1,4 +1,8 @@
 #include "utility.h"
+#include <string>
+#include <iostream>
+#include <fstream>
+using namespace std;
 
 int countLinesInFile(const string& filename) {
     ifstream fin(filename); // Open the file for reading 
