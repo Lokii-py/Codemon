@@ -1,98 +1,131 @@
 #include "Codemon.h"
 #include "skill.h"
+#include <iostream>
+#include <string>
+using namespace std;
 
-/*
-// Member Function Definitions
-// Private functions 
-void Codemon::evolve() {
-    int baseLuck = rand() % 71;
-    int evolutionChance = baseLuck + (skillCount * 5);
-
-    if (evolutionChance >= 60) {
-        level++;
-        int index = rand() % skillCount;
-        int boost = rand() % 101;
-        std::cout << name << " evolved! " << skills[index].getName() << " damage increased by " << boost << "%.\n";
-        skills[index].increaseDamage(boost);
-    }
-}
-
-// Public functions 
-// Default constructor
 Codemon::Codemon() {
-    name = "Unnamed";
-    type = "None";
-    level = 0;
-    maxHP = 0;
-    currentHP = 0;
-    skillCount = 0;
+	name = "Unnamed";
+	type = "None";
+	description = " ";
+	level = 0;
+	maxHP = 0;
+	currentHP = 0;
+	skillCount = 0;
 }
 
-// Parameterized constructor
-Codemon::Codemon(const std::string n, const std::string t, const int l, const int hpp) {
-    name = n;
-    type = t;
-    level = l;
-    maxHP = hpp;
-    currentHP = hpp;
-    skillCount = 0;
+Codemon::Codemon(const string n, const string desc, const string type, const int level, const int hp) {
+	name = n;
+	description = desc;
+	this->type = type;
+
+	if (level < 1) {
+		this->level = 1;
+	} else if(level >20) {
+		this->level = 20;
+	} else {
+		this->level = level;
+	}
+
+	if (hp < 200) {
+		maxHP = 200;
+	} else if (hp > 500) {
+		maxHP = 500;
+	} else {
+		maxHP = hp;
+	}
+	currentHP = hp;
+	skillCount = 0;
 }
 
-std::string Codemon::getName() const {
-    return name;
+int Codemon::getMaxHP() const {
+	return maxHP;
 }
-
 int Codemon::getLevel() const {
-    return level;
+	return level;
 }
-
-void Codemon::addSkill(const Skill& s) { //called from prepare function
-    for (int i = 0; i < skillCount; ++i) // checks if skills is already possessed
-        if (skills[i].getName() == s.getName()) {
-            std::cout << "Skill already known by Codemon. Can't add skill.\n";
-            return;
-        }
-
-    if (skillCount < 6) { // add skill then updates count
-        skills[skillCount++] = s;
-        evolve();
-    }
+double Codemon::getCurrentHP() const {
+	return currentHP;
 }
-
 
 int Codemon::getTypeIndex() const {
-    if (type == "Fire") {
-        return 0;
-    }
-    if (type == "Water") {
-        return 1;
-    }
-    if (type == "Grass") {
-        return 2;
-    }
-    if (type == "Electric") {
-        return 3;
-    }
-    std::cout << "type index not found";
-    return -1;
+	const string typeList[11] = {
+		"Fire", "Water", "Grass", "Electric", "Ice",
+		"Rock", "Normal", "Psychic", "Dark", "Steel", "Fairy"
+	};
+	for (int i = 0; i < 11; ++i) {
+		if (type == typeList[i]) {
+			return i;
+		}
+	}
+	return 0;
 }
 
-void Codemon::print() {
-    /*std::cout << name << " (Type: " << type << ", Level: " << level << ", HP: " << hp << ")\n";
-    std::cout << "  Skills (sorted by base damage):\n";
-    // Sort skills by base damage
-    for (int i = 0; i < skillCount - 1; ++i) { // bubble sort method
-        for (int j = 0; j < skillCount - i - 1; ++j) {
-            if (skills[j].getBaseDamage() > skills[j + 1].getBaseDamage()) {
-                Skill temp = skills[j];
-                skills[j] = skills[j + 1];
-                skills[j + 1] = temp;
-            }
-        }
-    }
-
-    for (int i = 0; i < skillCount; ++i)
-        skills[i].print();
-    
+int Codemon::getSkillCount() const {
+	return skillCount;
 }
-*/
+
+void Codemon::takeDamage(double dmg) {
+	currentHP -= dmg;
+	if (currentHP < 0) {
+		currentHP = 0;
+	}
+}
+
+void Codemon::heal(double healHP) {
+	if (currentHP > (0.7 * maxHP)) {
+		cout << "OOPS!! Cannot Apply heal Now, Codemon's HP is above 70%." << endl;
+		return;
+	}
+	currentHP += healHP;
+	if (currentHP > maxHP) {
+		currentHP = maxHP;
+	}
+}
+
+bool Codemon::isFainted() const {
+	return currentHP <= 0;
+}
+
+bool Codemon::addSkill(const Skill& s) {
+	if (skillCount >= 5) {
+		return false;
+	}
+	skills[skillCount++] = s;
+	return true;
+}
+
+const Skill& Codemon::getSkill(int idx) const {
+	if (idx < 0 || idx >= skillCount) {
+		cerr << "Invalid skill index." << endl;
+		exit(1);
+	}
+	return skills[idx];
+}
+
+void Codemon::print() const {
+	cout << name << " (Type: " << type << ", Level: " << level << ", HP: " << currentHP << "/" << maxHP << ")\n";
+	cout << "  Skills (sorted by base damage):\n";
+
+	// Sort copy of skills array by base damage
+	Skill sorted[5];
+	for (int i = 0; i < skillCount; ++i) sorted[i] = skills[i];
+	for (int i = 0; i < skillCount - 1; ++i) {
+		for (int j = 0; j < skillCount - i - 1; ++j) {
+			if (sorted[j].getBaseDamage() > sorted[j + 1].getBaseDamage()) {
+				Skill temp = sorted[j];
+				sorted[j] = sorted[j + 1];
+				sorted[j + 1] = temp;
+			}
+		}
+	}
+	for (int i = 0; i < skillCount; ++i) {
+		sorted[i].print();
+	}
+}
+
+bool operator==(const Codemon& lhs, const Codemon& rhs) {
+    return lhs.name == rhs.name &&
+           lhs.type == rhs.type &&
+           lhs.description == rhs.description;
+}
