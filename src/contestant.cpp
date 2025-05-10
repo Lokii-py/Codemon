@@ -162,14 +162,14 @@ bool Contestant::isAlive() const {
 	return !(team[activeCodemon].isFainted());
 }
 
-void Contestant::selectCodemons(Codemon pool[], int poolSize, bool random) {
-    setTeamSize(3);
+void Contestant::selectCodemons(Codemon pool[], int poolSize, bool random, int n) {
+    setTeamSize(n);
 
     if (random) {
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < n; ++i)
             team[i] = pool[rand() % poolSize];
     } else {
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < n; ++i) {
             cout << "\nPick Codemon #" << i + 1 << ":\n";
             for (int j = 0; j < poolSize; ++j) {
                 cout << j << ": " << pool[j].getName() << " (" << pool[j].getType() << ")\n";
