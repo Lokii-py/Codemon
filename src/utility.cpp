@@ -17,3 +17,25 @@ int countLinesInFile(const string& filename) {
     fin.close(); // Close the file 
     return count;
 }
+
+void loadCodemonsFromFile(const string& filename, Codemon codemonPool[], int maxSize) {
+    ifstream fin(filename);
+    if (!fin) {
+        cerr << "Error: cannot open file " << filename << endl;
+        exit(1);
+    }
+
+    int count = 0;
+    while (count < maxSize) {
+        std::string name, type, desc;
+        getline(fin, name, ',');
+        if (!fin || name.empty()) break;
+        getline(fin, type, ',');
+        getline(fin, desc);  // till newline
+
+        codemonPool[count] = Codemon(name, type, desc);
+        count++;
+    }
+
+    fin.close();
+}

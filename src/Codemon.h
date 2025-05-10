@@ -23,6 +23,8 @@ public:
     Codemon();
 
     Codemon(const string n, const string desc, const string type, const int level, const int hp);
+    
+    Codemon(std::string name, std::string type, std::string desc);
 
     int getMaxHP() const;
     int getLevel() const;
@@ -31,6 +33,10 @@ public:
     int getTypeIndex() const;
 
     int getSkillCount() const;
+    
+    string getName() const;
+    
+    string getType() const;
 
     void takeDamage(double dmg);
 

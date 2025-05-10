@@ -1,12 +1,15 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+#include "Codemon.h"
 #include <string>
 #include <iostream>
 #include <fstream>
 using namespace std;
 
 int countLinesInFile(const string& filename);
+
+void loadCodemonsFromFile(const string& filename, Codemon codemonPool[], int maxSize);
 
 template<typename T>
 void loadFromfile(const string& filename, T itemArray[], int maxSize) {

@@ -38,6 +38,16 @@ Codemon::Codemon(const string n, const string desc, const string type, const int
 	skillCount = 0;
 }
 
+Codemon::Codemon(std::string name, std::string type, std::string desc) {
+    this->name = name;
+    this->type = type;
+    this->description = desc;
+    level = rand() % 20 + 1;
+    maxHP = 200 + rand() % 301; // 200–500
+    currentHP = maxHP;
+    skillCount = 0;
+}
+
 int Codemon::getMaxHP() const {
 	return maxHP;
 }
@@ -46,6 +56,14 @@ int Codemon::getLevel() const {
 }
 double Codemon::getCurrentHP() const {
 	return currentHP;
+}
+
+string Codemon::getName() const{
+    return name;
+}
+
+string Codemon::getType() const{
+    return name;
 }
 
 int Codemon::getTypeIndex() const {
