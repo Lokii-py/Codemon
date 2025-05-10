@@ -1,5 +1,5 @@
+#include "Codemon.h"
 #include "skill.h"
-#include "Codemon.h" 
 #include <iostream>
 #include <string>
 using namespace std;
@@ -26,7 +26,7 @@ Skill::Skill() {
 }
 
 // Parameterized constructor
-Skill(const std::string& name, const std::string& t, int baseDamage, const std::string& desc) {
+Skill::Skill(const std::string& n, const std::string& t, int baseDamage, const std::string& desc) {
     name = n;
     type = t;
     this->baseDamage = baseDamage;
@@ -37,7 +37,7 @@ int Skill::getBaseDamage() const {
     return baseDamage;
 }
 
-std::string Skill::getName() const {
+string Skill::getName() const {
     return name;
 }
 
@@ -46,10 +46,10 @@ void Skill::increaseDamage(int percent) {
 }
 
 void Skill::print() const {
-    std::cout << "  - " << name
-            << " [" << type << "]  Dmg: " << baseDamage
-            << "  — " << description << '\n';
-}
+    cout << "  - " << name
+        << " [" << type << "]  Dmg: " << baseDamage
+        << "  — " << description << '\n';
+    }
 
 //New function to calculate effective damage based on type chart
 double Skill::getEffectiveDamage(const Codemon& attacker, const Codemon& defender) {
@@ -57,5 +57,3 @@ double Skill::getEffectiveDamage(const Codemon& attacker, const Codemon& defende
     int defenderType = defender.getTypeIndex();
     return baseDamage * typeChart[attackerType][defenderType];
 }
-
-
