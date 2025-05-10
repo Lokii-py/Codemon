@@ -7,7 +7,7 @@
 using namespace std;
 
 class Contestant{
-private: 
+private:
     Codemon* team = nullptr;
     int teamsize = 0;
     int activeCodemon = 0;
@@ -25,9 +25,8 @@ private:
     static int qFront;
 
     void resizeQueue(int newCapacity);
-    void placeRandomCodemon(Arena& A);
 
-public: 
+public:
     Contestant();
     
     // Desc: This is a constructor that allows for the input to be passed in as value.
@@ -40,6 +39,10 @@ public:
     Contestant(const Contestant& other);
 
     Contestant& operator = (const Contestant& rhs);
+    
+    void placeRandomCodemon(Arena& A);
+    
+    void setActiveCodemon(const int n);
 
     static void initSharedQueue(int firstCap);
 
@@ -57,7 +60,7 @@ public:
     
     bool useNextItem();
     
-    void selectCodemons(Codemon pool[], int poolSize, bool random); 
+    void selectCodemons(Codemon pool[], int poolSize, bool random, int n); 
 
     void printVisibleMap(const Arena& A) const;
 

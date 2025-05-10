@@ -26,6 +26,10 @@ void Contestant::placeRandomCodemon(Arena& A) {
 	return;
 }
 
+void Contestant::setActiveCodemon(const int n){
+    activeCodemon = n;
+}
+
 Contestant::Contestant(){
     playerName = " ";
     isHuman = true;
@@ -41,6 +45,7 @@ Contestant::Contestant(string name, bool human, int codemonNum){
 	row = -1;
 	col = -1;
 	team = new Codemon[teamsize];
+	void placeRandomCodemon(Arena& A);
 }
 
 Contestant::~Contestant() {
@@ -166,16 +171,16 @@ void Contestant::selectCodemons(Codemon pool[], int poolSize, bool random, int n
     setTeamSize(n);
 
     if (random) {
-        for (int i = 0; i < n; ++i)
+        for (int i = 0; i < n; i++)
             team[i] = pool[rand() % poolSize];
     } else {
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < n; i++) {
             cout << "\nPick Codemon #" << i + 1 << ":\n";
             for (int j = 0; j < poolSize; ++j) {
                 cout << j << ": " << pool[j].getName() << " (" << pool[j].getType() << ")\n";
             }
-
             int choice;
+            cout << endl << "pick a number from the pool: ";
             cin >> choice;
             while (choice < 0 || choice >= poolSize) {
                 cout << "Invalid. Try again: ";
