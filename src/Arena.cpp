@@ -71,19 +71,7 @@ bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
     return false;
 }
 
-void Arena::printTerrainForDebug() const {
-    // Print the terrain map for debugging
-    cout << "Terrain Map:\n";
-    for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j < SIZE; ++j) {
-            cout << terrainMap[i][j] << " ";
-        }
-        cout << "\n";
-    }
-}
-
-
-void Arena::updateVisibility(int x, int y) {
+void Arena::updateVisibility(int x, int y, char c) {
     for (int r = 0; r < SIZE; ++r) {
         for (int c = 0; c < SIZE; ++c) {
             visibleMap[r][c] = '#';
@@ -97,12 +85,24 @@ void Arena::updateVisibility(int x, int y) {
                 visibleMap[nx][ny] = terrainMap[nx][ny];
         }
     }
+    visibleMap[x][y] = c;
 }
 
 void Arena::setTerrainTile(const int n_row, const int n_col, const char c) {
+    curRow = n_row;
+    curCol = n_col;
     visibleMap[n_row][n_col] = c;
 }
 
+int Arena::getCurRow() const {
+    return curRow;
+}
+
+int Arena::getCurCol() const {
+    return curCol;
+}
+
+/*
 void Arena::clearPreviousTile() {
     if (curRow != -1 && curCol != -1) {
         visibleMap[curRow][curCol] = terrainMap[curRow][curCol];
@@ -114,6 +114,7 @@ void Arena::updateCurrentPosition(const int n_row, const int n_col) {
     curRow = n_row;
     curCol = n_col;
 }
+*/
 
 void Arena::printVisibleMap() const {  // I know it is not "void Contestant::printVisibleMap() const"
     // Print the visible map
@@ -126,7 +127,7 @@ void Arena::printVisibleMap() const {  // I know it is not "void Contestant::pri
     std::cout << "==========\n";
 }
 
-bool Arena::isEnemyInRange(int& row, int& col, Arena& arena) {
+bool Arena::isSnugInRange(int row, int col) const {
     for (int i = row - 1; i <= row + 1; ++i) {
         for (int j = col - 1; j <= col + 1; ++j) {
             if (i >= 0 && i < SIZE && j >= 0 && j < SIZE) {
@@ -138,3 +139,16 @@ bool Arena::isEnemyInRange(int& row, int& col, Arena& arena) {
     }
     return false;
 }
+
+/*
+void Arena::printTerrainForDebug() const {
+    // Print the terrain map for debugging
+    cout << "Terrain Map:\n";
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            cout << terrainMap[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+*/
