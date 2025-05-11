@@ -1,5 +1,5 @@
 // Programmer: Henry Campbell (id: 12619823;hmcngb) and Lokesh Das (id: 12631232;ldd3g)
-// Date: 4/5/25
+// Date: 5/5/25
 // File: main.cpp
 // Assignment: Final 
 // Purpose: This is the Codemon simulation game player.
@@ -13,6 +13,7 @@
 #include "skill.h"
 #include "Codemon.h"
 #include "item.h"
+#include "Snuggle.h"
 
 using namespace std;
 
@@ -27,9 +28,9 @@ int main() {
     Item  items[MAX_POOL];
     Codemon codemonPool[MAX_POOL];
 
-    loadCodemonsFromFile("codemons.txt", codemonPool, MAX_POOL);
-    loadFromfile<Skill>("skills.txt", skills, MAX_POOL);
-    loadFromfile<Item>("items.txt", items, MAX_POOL);
+    //loadCodemonsFromFile("codemons.txt", codemonPool, MAX_POOL);
+    //loadFromfile<Skill>("skills.txt", skills, MAX_POOL);
+    //loadFromfile<Item>("items.txt", items, MAX_POOL);
 
     // Player setup
     int numHumans, numAI;
@@ -73,35 +74,17 @@ int main() {
 
     // Place each contestant's active Codémon
     for (int i = 0; i < totalContestants; i++) {
-
-        contestants[i].chooseActiveCodemon();
-        arena.placeCodemonRandomly(contestants[i].getActiveCodemon(), i);
+        roster[i].placeRandomCodemon(arena);
     }
 
-    // Place Snuggladon
+
+    // Creat and place Snuggladon
     Snuggladon snug(totalContestants);
-    arena.placeSnuggladon(snug);
-
-    Skill skillPool[100];
-    int skillCount = loadSkillFile(skillPool);
-
-    Item itemPool[50];
-    int itemCount = loadItemFile(itemPool);
-
-    // Shared item queue
-    Item sharedQueue[20];
-    int sharedQueueSize = 10;
-    fillSharedItemQueue(sharedQueue, sharedQueueSize, itemPool, itemCount);
-
-    
-    // place items on battlefield
-
-    // initialize snuggledon
-    //Randomly place the active Codémons and Snuggladon
+    snug.placeSnug(arena);
 
     // Place battlefield items (20% of 12x12 grid)
     int numItemsOnField = ceil(144 * 0.2);
-    arena.placeItemsOnGrid(itemPool, itemCount, numItemsOnField);
+    // arena.placeItemsOnGrid(itemPool, itemCount, numItemsOnField);
 
 
     // main loop
@@ -115,17 +98,23 @@ int main() {
         cout << "\n=== TURN " << turnCounter << " ===\n";
 
         for (int i = 0; i < totalContestants; i++) {
-            Contestant current = roster[i];
+            Contestant& current = roster[i];  // Use reference so changes persist
             current.printVisibleMap(arena);
             char symbol = i;
             current.takeTurn(arena, symbol);
+            int row = current.getRow();
+            int col = current.getCol();
+            if (arena.isSnugInRange(row, col)) {
+                bool isHuman = current.isHum();
+                battle(current, snug, isHuman);
+            }
         }
 
-        snug.takeTurn(arena, totalContestants);
+        //  snug.takeTurn(arena, totalContestants);
 
         // Redistribute items every 5 turns
         if (turnCounter % 5 == 0) {
-            arena.redistributeItems();
+            //arena.redistributeItems();
         }
 
         // Victory Check
@@ -150,6 +139,3 @@ int main() {
 
     return 0;
 }
-
-    //END
-    //
