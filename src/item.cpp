@@ -1,64 +1,201 @@
+#include "contestant.h"
 #include "item.h"
+#include "Arena.h"
+#include "Codemon.h"
+#include "mechanic.h"
+#include <iostream>
+#include <string>
+using namespace std;
 
-// Public functions 
-// Default constructor
-Item::Item() {
-    name = "Unnamed";
-    description = "None";
-    effectType = "None";
-    duration = 0;
+void Contestant::resizeQueue(int newCapacity) {
+	Item* newQueue = new Item[newCapacity];
+	for (int i = 0; i < qSize; i++) {
+		newQueue[i] = itemQueue[(qFront + i) % qCapacity];
+	}
+	delete[] itemQueue;
+	itemQueue = newQueue;
+	qCapacity = newCapacity;
+	qFront = 0;
 }
 
-// Parameterized constructor
-Item::Item(const std::string& n, const std::string& des, std::string& type, int dur){
-    name = n;
-    description = des;
-    effectType = type;
-    duration = dur;
+void Contestant::placeRandomCodemon(Arena& A) {
+	do {
+		row = rand() % 12;
+		col = rand() % 12;
+	} while (A.isOccupied(row, col));
+	return;
 }
 
-int Item::getDuration() const {
-    return duration;
+void Contestant::setActiveCodemon(const int n) {
+	activeCodemon = n;
 }
 
-void Item::print() const {
-    std::cout << "  - " << name << " - " << description << " (Duration: " << duration << ")\n";
+Contestant::Contestant() {
+	playerName = " ";
+	isHuman = true;
+	row = -1;
+	col = -1;
 }
 
-void loadItemsFromFile(const string& filename, Item itemArray[], int maxSize) {
-    ifstream fin(filename); // Open the file for reading 
-    if (!fin) {
-        cerr << "Error: Could not open file " << filename << endl;
-        exit(1); // Exit the program if the file can't be opened
-    }
+Contestant::Contestant(string name, bool human, int codemonNum) {
+	playerName = name;
+	isHuman = human;
+	setTeamSize(codemonNum);
+	activeCodemon = 0;
+	row = -1;
+	col = -1;
+	team = new Codemon[teamsize];
+	void placeRandomCodemon(Arena & A);
+}
 
-    int count = 0;
+Contestant::~Contestant() {
+	delete[] team;
+}
 
-    // Read up to maxSize items from the file
-    while (count < maxSize) {
-        string name, type, amountStr, description;
+Contestant::Contestant(const Contestant& other) {
+	cout << "Copying Contestant: " << other.playerName << endl;
+	cout << "Enter name for cloned Contestant: ";
+	getline(cin, playerName);
 
-        // Read each field using comma as the delimiter
-        getline(fin, name, ',');
-        getline(fin, type, ',');
-        getline(fin, amountStr, ',');
-        getline(fin, description); // Reads the remainder of the line (until newline)
+	teamsize = other.teamsize;
+	activeCodemon = other.activeCodemon;
+	row = other.row;
+	col = other.col;
+	isHuman = other.isHuman;
 
-        // Debug output 
-        // cout << name << endl; 
-        // cout << type << endl; 
-        // cout << amountStr << endl; 
-        // cout << description << endl; 
+	team = new Codemon[teamsize];
+	for (int i = 0; i < teamsize; ++i) {
+		team[i] = other.team[i];
+	}
+}
 
-        // Convert amount string to integer
-        int amount = stoi(amountStr);
+Contestant& Contestant::operator = (const Contestant& rhs) {
+	if (this == &rhs) {
+		return *this;
+	}
 
-        // Create and store the Item in the array
-        itemArray[count] = Item(name, description, type, amount);
-        count++;
-    }
+	delete[] team;
 
-    fin.close(); // Close the file 
+	this->playerName = rhs.playerName;
+	this->teamsize = rhs.teamsize;
+	this->activeCodemon = rhs.activeCodemon;
+	this->row = rhs.row;
+	this->col = rhs.col;
+	this->isHuman = rhs.isHuman;
+
+	team = new Codemon[teamsize];
+	for (int i = 0; i < teamsize; ++i) {
+		team[i] = rhs.team[i];
+	}
+	return *this;
+}
+
+void Contestant::initSharedQueue(int firstCap) {
+	delete[] itemQueue;
+	itemQueue = new Item[firstCap];
+	qCapacity = firstCap;
+	qSize = 0;
+	qFront = 0;
 }
 
 
+void Contestant::setTeamSize(int n) {
+	delete[] team;
+	teamsize = n;
+	activeCodemon = 0;
+	team = new Codemon[teamsize];
+}
+
+bool Contestant::addCodemon(const Codemon& c, int idx) {
+	if (idx < 0 || idx >= teamsize) return false;
+	team[idx] = c;
+	return true;
+}
+
+Codemon& Contestant::getActive() {
+	return team[activeCodemon];
+}
+
+void Contestant::spawn(Arena& arena, int r, int c, char symbol) {
+	row = r;
+	col = c;
+	arena.setTerrainTile(row, col, symbol);
+}
+
+void Contestant::takeTurn(Arena& arena, char symbol) {
+	if (isHuman) {
+		arena.printVisibleMap();
+		cout << "[" << playerName << "] move (W A S D Q E Z C): ";
+		char mv;
+		cin >> mv;
+		movement(mv, symbol, arena);
+	}
+	else {
+		const char dir[8] = { 'W','A','S','D','Q','E','Z','C' };
+		char mv = dir[rand() % 8];
+		movement(mv, symbol, arena);
+	}
+	row = arena.getCurRow();
+	col = arena.getCurCol();
+}
+
+void Contestant::enqueueItem(const Item& item) {
+	if (qSize == qCapacity) {
+		resizeQueue(qCapacity * 2);
+	}
+	int pos = (qFront + qSize) % qCapacity;
+	itemQueue[pos] = item;
+	qSize++;
+}
+bool Contestant::useNextItem() {
+	if (qSize == 0) return false;
+	const Item& item = itemQueue[qFront];
+	cout << "Using item: ";
+	item.print();
+	// Apply effect to active codemon if needed
+	qFront = (qFront + 1) % qCapacity;
+	qSize--;
+	if (qCapacity > 4 && qSize < qCapacity / 4) resizeQueue(qCapacity / 2);
+	return true;
+}
+
+void Contestant::printVisibleMap(const Arena& A) const {
+	cout << "=== " << playerName << "'s visible map ===\n";
+	A.printVisibleMap();
+}
+
+bool Contestant::isAlive() const {
+	return !(team[activeCodemon].isFainted());
+}
+
+void Contestant::selectCodemons(Codemon pool[], int poolSize, bool random, int n) {
+	setTeamSize(n);
+
+	if (random) {
+		for (int i = 0; i < n; i++)
+			team[i] = pool[rand() % poolSize];
+	}
+	else {
+		for (int i = 0; i < n; i++) {
+			cout << "\nPick Codemon #" << i + 1 << ":\n";
+			for (int j = 0; j < poolSize; ++j) {
+				cout << j << ": " << pool[j].getName() << " (" << pool[j].getType() << ")\n";
+			}
+			int choice;
+			cout << endl << "pick a number from the pool: ";
+			cin >> choice;
+			while (choice < 0 || choice >= poolSize) {
+				cout << "Invalid. Try again: ";
+				cin >> choice;
+			}
+			team[i] = pool[choice];
+		}
+	}
+}
+
+
+// Static member initialization
+Item* Contestant::itemQueue = nullptr;
+int   Contestant::qCapacity = 0;
+int   Contestant::qSize = 0;
+int   Contestant::qFront = 0;
