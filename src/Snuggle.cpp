@@ -1,4 +1,5 @@
 #include "Snuggle.h"
+#include "Arena.h"
 
 Snuggladon::Snuggladon(int totalContestants) {
     maxHP = 1500 + 200 * totalContestants;
@@ -140,4 +141,14 @@ void Snuggladon::moveTowards(int targetRow, int targetCol, char terrainMap[5][5]
     std::cout << "Snuggladon moved from (" << row << "," << col << ") to (" << bestRow << "," << bestCol << ")\n";
     row = bestRow;
     col = bestCol;
+}
+
+void Snuggladon::placeSnug(Arena& A) {
+    do {
+        row = rand() % 12;
+        col = rand() % 12;
+    } while (A.isOccupied(row, col));
+    A.setEneRow(row);
+    A.setEneCol(col);
+    return;
 }
