@@ -28,9 +28,9 @@ int main() {
     Item  items[MAX_POOL];
     Codemon codemonPool[MAX_POOL];
 
-    //loadCodemonsFromFile("codemons.txt", codemonPool, MAX_POOL);
-    //loadFromfile<Skill>("skills.txt", skills, MAX_POOL);
-    //loadFromfile<Item>("items.txt", items, MAX_POOL);
+    loadCodemonsFromFile("codemons.txt", codemonPool, MAX_POOL);
+    loadFromfile<Skill>("skills.txt", skills, MAX_POOL);
+    loadFromfile<Item>("items.txt", items, MAX_POOL);
 
     // Player setup
     int numHumans, numAI;
