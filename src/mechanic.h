@@ -6,6 +6,7 @@
 #include <fstream>
 using namespace std;
 
+class Snuggladon;
 /*
 Contestant can either:
     - Move in cardinal and diagonal directiosn
@@ -33,10 +34,11 @@ void movement(char move, char type, Arena& arena);
 // Desc: This friend function runs the battle
 // Pre: needs contestants and arena
 // Post: returns nothing but edits contestants
-void battle(Contestant& player, Contestant& comp, Arena& arena);
+void battle(Contestant& player, Snuggladon& snug, bool isHuman);
 
+// Desc: Utility function to count the number of lines in a file.
+// Pre: 'filename' must be a valid string path to a readable text file.
+// Post: Returns an integer representing the number of lines in the file.
 int countLinesInFile(const string& filename);
-
-
 
 #endif

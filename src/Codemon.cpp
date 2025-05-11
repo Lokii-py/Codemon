@@ -21,17 +21,21 @@ Codemon::Codemon(const string n, const string desc, const string type, const int
 
 	if (level < 1) {
 		this->level = 1;
-	} else if(level >20) {
+	}
+	else if (level > 20) {
 		this->level = 20;
-	} else {
+	}
+	else {
 		this->level = level;
 	}
 
 	if (hp < 200) {
 		maxHP = 200;
-	} else if (hp > 500) {
+	}
+	else if (hp > 500) {
 		maxHP = 500;
-	} else {
+	}
+	else {
 		maxHP = hp;
 	}
 	currentHP = hp;
@@ -39,13 +43,13 @@ Codemon::Codemon(const string n, const string desc, const string type, const int
 }
 
 Codemon::Codemon(std::string name, std::string type, std::string desc) {
-    this->name = name;
-    this->type = type;
-    this->description = desc;
-    level = rand() % 20 + 1;
-    maxHP = 200 + rand() % 301; // 200–500
-    currentHP = maxHP;
-    skillCount = 0;
+	this->name = name;
+	this->type = type;
+	this->description = desc;
+	level = rand() % 20 + 1;
+	maxHP = 200 + rand() % 301; // 200–500
+	currentHP = maxHP;
+	skillCount = 0;
 }
 
 int Codemon::getMaxHP() const {
@@ -58,12 +62,12 @@ double Codemon::getCurrentHP() const {
 	return currentHP;
 }
 
-string Codemon::getName() const{
-    return name;
+string Codemon::getName() const {
+	return name;
 }
 
-string Codemon::getType() const{
-    return name;
+string Codemon::getType() const {
+	return name;
 }
 
 int Codemon::getTypeIndex() const {
@@ -143,7 +147,7 @@ void Codemon::print() const {
 }
 
 bool operator==(const Codemon& lhs, const Codemon& rhs) {
-    return lhs.name == rhs.name &&
-           lhs.type == rhs.type &&
-           lhs.description == rhs.description;
+	return lhs.name == rhs.name &&
+		lhs.type == rhs.type &&
+		lhs.description == rhs.description;
 }

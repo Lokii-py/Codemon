@@ -35,56 +35,6 @@ void Arena::generateTerrain() {
     }
 }
 
-int Arena::getCurRow() const{
-    return curRow;
-}
-
-int Arena::getCurCol() const{
-    return curCol;
-}
-    
-void Arena::updateVisibility(const int x,const int y, const char c) {
-    //Resseting the visible Map
-    for (int r = 0; r < SIZE; ++r)
-        for (int c = 0; c < SIZE; ++c)
-            visibleMap[r][c] = '#';
-
-    for (int i = -1; i <= 1; ++i) {
-        for (int j = -1; j <= 1; ++j) {
-            int nx = x + i;
-            int ny = y + j;
-            if ((nx >= 0 && nx < SIZE) && (ny >= 0 && ny < SIZE))
-                visibleMap[nx][ny] = terrainMap[nx][ny];
-        }
-    }
-    visibleMap[x][y] = c;
-}
-
-void Arena::printVisibleMap() const {  // I know it is not "void Contestant::printVisibleMap() const"
-    // Print the visible map
-    for (int i = 0; i < SIZE; ++i) {
-        for (int j = 0; j < SIZE; ++j) {
-            cout << visibleMap[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << "-----------------------" << endl;
-}
-
-bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
-    // Check for neighbors top and left to ensure they are not the same type
-    // Top
-    if (x > 0 && terrainMap[x - 1][y] == type) {
-            return true;
-    }
-    
-    // Left
-    if (y > 0 && terrainMap[x][y - 1] == type) {
-        return true;
-    }
-    return false;
-}
-
 bool Arena::isOccupied(int row, int col) const {
     return occupied[row][col];
 }
@@ -94,22 +44,90 @@ void Arena::markOccupied(int row, int col) {
 }
 
 char Arena::getTerrainTile(int row, int col) const {
-    return terrainMap[row][col];
+    char type;
+    type = terrainMap[row][col];
+    return type;
 }
 
-void Arena::setTerrainTile(const int n_row, const int n_col, const char c){         
-    if (curRow != -1 && curCol != -1) {
-        visibleMap[curRow][curCol] = terrainMap[curRow][curCol]; // replaces old spot with terain symbol if not first move
-        occupied[curRow][curCol] = false;
+bool Arena::hasSameTypeNeighbor(int x, int y, char type) const {
+    // Check for neighbors (top, bottom, left, right) to ensure they are not the same type
+    // Top
+    if (x > 0 && terrainMap[x - 1][y] == type) {
+        return true;
     }
+    // Bottom
+    if (x < 4 && terrainMap[x + 1][y] == type) {
+        return true;
+    }
+    // Left
+    if (y > 0 && terrainMap[x][y - 1] == type) {
+        return true;
+    }
+    // Right
+    if (y < 4 && terrainMap[x][y + 1] == type) {
+        return true;
+    }
+
+    return false;
+}
+
+void Arena::updateVisibility(int x, int y, char c) {
+    for (int r = 0; r < SIZE; ++r) {
+        for (int c = 0; c < SIZE; ++c) {
+            visibleMap[r][c] = '#';
+        }
+    }
+    for (int i = -1; i <= 1; ++i) {
+        for (int j = -1; j <= 1; ++j) {
+            int nx = x + i;
+            int ny = y + j;
+            if (nx >= 0 && nx < SIZE && ny >= 0 && ny < SIZE)
+                visibleMap[nx][ny] = terrainMap[nx][ny];
+        }
+    }
+    visibleMap[x][y] = c;
+}
+
+void Arena::setTerrainTile(const int n_row, const int n_col, const char c) {
     curRow = n_row;
     curCol = n_col;
-    updateVisibility(curRow, curCol, c);
-    markOccupied(curRow,curCol);
-    return;
+    visibleMap[n_row][n_col] = c;
 }
 
-bool Arena::isEnemyInRange(int row, int col) const {
+int Arena::getCurRow() const {
+    return curRow;
+}
+
+int Arena::getCurCol() const {
+    return curCol;
+}
+
+/*
+void Arena::clearPreviousTile() {
+    if (curRow != -1 && curCol != -1) {
+        visibleMap[curRow][curCol] = terrainMap[curRow][curCol];
+        occupied[curRow][curCol] = false;
+    }
+}
+
+void Arena::updateCurrentPosition(const int n_row, const int n_col) {
+    curRow = n_row;
+    curCol = n_col;
+}
+*/
+
+void Arena::printVisibleMap() const {  // I know it is not "void Contestant::printVisibleMap() const"
+    // Print the visible map
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            cout << visibleMap[i][j] << " ";
+        }
+        cout << "\n";
+    }
+    std::cout << "==========\n";
+}
+
+bool Arena::isSnugInRange(int row, int col) const {
     for (int i = row - 1; i <= row + 1; ++i) {
         for (int j = col - 1; j <= col + 1; ++j) {
             if (i >= 0 && i < SIZE && j >= 0 && j < SIZE) {
@@ -122,13 +140,15 @@ bool Arena::isEnemyInRange(int row, int col) const {
     return false;
 }
 
-// void Arena::printTerrainForDebug() const {
-//     // Print the terrain map for debugging
-//     cout << "Terrain Map:\n";
-//     for (int i = 0; i < SIZE; ++i) {
-//         for (int j = 0; j < SIZE; ++j) {
-//             cout << terrainMap[i][j] << " ";
-//         }
-//         cout << "\n";
-//     }
-// }
+/*
+void Arena::printTerrainForDebug() const {
+    // Print the terrain map for debugging
+    cout << "Terrain Map:\n";
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            cout << terrainMap[i][j] << " ";
+        }
+        cout << "\n";
+    }
+}
+*/

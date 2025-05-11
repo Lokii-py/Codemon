@@ -6,67 +6,84 @@
 class Arena {
 private:
     static const int SIZE = 12;
-	char terrainMap[SIZE][SIZE];
-	bool occupied[SIZE][SIZE];
-	char visibleMap[SIZE][SIZE];
-	int curRow, curCol;
-	int eneRow, eneCol;
-	
-	//Desc:Generates the terrain map using valid terrain symbols
-	//Pre:None
-	//Post:Each tile is initialized with a type, avoiding same-type neighbors
-	void generateTerrain();
-    
+    char terrainMap[SIZE][SIZE];
+    bool occupied[SIZE][SIZE];
+    char visibleMap[SIZE][SIZE];
+    int curRow, curCol;
+    int eneRow, eneCol;
+
+    // Desc: Generates the terrain map using valid terrain symbols
+        // Pre: None
+        // Post: Each tile is initialized with a terrain type, avoiding adjacent duplicates
+    void generateTerrain();
+
 public:
-    //Desc:Default constructor
-    //Pre:None
-    //Post:Initializes visibility and occupation arrays, then generates terrain
-    //Stores the full terrain map (F, M, P, W, S)
+    // Desc: Default constructor
+    // Pre: None
+    // Post: Initializes terrainMap, occupied, visibleMap; then generates terrain
     Arena();
-    
+
+    // Desc: Gets the current row of the active player/Codémon
+    // Pre: None
+    // Post: Returns curRow
     int getCurRow() const;
 
+    // Desc: Gets the current column of the active player/Codémon
+    // Pre: None
+    // Post: Returns curCol
     int getCurCol() const;
 
-    //Desc:Updates visibility around a Codémon (3x3 area) and overlays symbol at current position
-    //Pre:x, y are Codémon coordinates; c is the Codémon symbol
-    //Post:Updates the visibleMap with terrain and symbol in current position
+    // Desc: Updates visibility around a Codémon in a 3x3 radius
+    // Pre: x and y are current coordinates; c is the Codémon symbol
+    // Post: Updates visibleMap with surrounding terrain and current symbol
     void updateVisibility(int x, int y, char c);
-    
-    //Desc:Prints the visible portion of the battlefield to console
-    //Pre:None
-    //Post:Shows revealed terrain and Codémon symbols, hides unexplored tiles with '#'
+
+    // Desc: Prints the visible portion of the arena (fog-of-war applied)
+    // Pre: None
+    // Post: Displays known terrain and symbols; unexplored tiles are shown as '#'
     void printVisibleMap() const;
 
-    //Desc:Checks if a tile is already occupied
-    //Pre:row and col are within bounds
-    //Post:Returns true if the tile is currently occupied
+    // Desc: Checks if a tile is occupied
+    // Pre: row and col are valid indices (0–11)
+    // Post: Returns true if occupied[row][col] is true
     bool isOccupied(int row, int col) const;
-    
-    //Desc:Checks if a given terrain type exists adjacent to (x, y)
-    //Pre:x, y are coordinates; type is terrain character to avoid
-    //Post:Returns true if a neighbor has the same terrain type
+
+    // Desc: Checks if any adjacent tile shares the same terrain type
+    // Pre: x and y are valid indices; type is the terrain char to avoid repeating
+    // Post: Returns true if adjacent tile matches the type
     bool hasSameTypeNeighbor(int x, int y, char type) const;
 
-    //Desc:Marks a tile as occupied
-    //Pre:row and col are within bounds
-    //Post:Sets occupied[row][col] to true
+    // Desc: Marks a tile as occupied
+    // Pre: row and col are valid indices
+    // Post: Sets occupied[row][col] = true
     void markOccupied(int row, int col);
 
-    //Desc:Returns the terrain type at a given location
-    //Pre:row and col are within bounds
-    //Post:Returns terrainMap[row][col]
+    // Desc: Returns the terrain type of a given tile
+    // Pre: row and col are valid indices
+    // Post: Returns terrainMap[row][col]
     char getTerrainTile(int row, int col) const;
 
-    //Desc:Moves the Codémon to a new tile and updates terrain visibility
-    //Pre:n_row and n_col specify the new coordinates; c is the Codémon symbol
-    //Post:Clears old position, places Codémon in new tile, updates visibility
+    // Desc: Moves Codémon to new position and updates visibility
+    // Pre: n_row and n_col are destination coordinates; c is Codémon symbol
+    // Post: Codémon is placed in new location and visibility is updated
     void setTerrainTile(const int n_row, const int n_col, const char c);
 
-    //Desc:Checks if enemy Codémon is in adjacent tile (3x3 zone)
-    //Pre:row, col are current player Codémon coordinates
-    //Post:Returns true if enemy is found in surrounding tiles
-    bool isEnemyInRange(int row, int col) const;
+    // Desc: Checks if an enemy is in adjacent 3x3 area
+    // Pre: row and col are player Codémon coordinates
+    // Post: Returns true if enemy is nearby
+    bool isSnugInRange(int row, int col) const;
+
+    // Desc: Sets enemy row position
+    // Pre: r is a valid row index
+    // Post: Sets eneRow
+    void setEneRow(int r) { eneRow = r; }
+
+    // Desc: Sets enemy column position
+    // Pre: c is a valid column index
+    // Post: Sets eneCol
+    void setEneCol(int c) { eneCol = c; }
+
+    //void redistributeItems();
 };
 
 #endif

@@ -8,44 +8,44 @@
 using namespace std;
 
 void Contestant::resizeQueue(int newCapacity) {
-    Item* newQueue = new Item[newCapacity];
-    for (int i = 0; i < qSize; i++) {
-        newQueue[i] = itemQueue[(qFront + i) % qCapacity];
-    }
-    delete[] itemQueue;
-    itemQueue = newQueue;
-    qCapacity = newCapacity;
-    qFront = 0;
+	Item* newQueue = new Item[newCapacity];
+	for (int i = 0; i < qSize; i++) {
+		newQueue[i] = itemQueue[(qFront + i) % qCapacity];
+	}
+	delete[] itemQueue;
+	itemQueue = newQueue;
+	qCapacity = newCapacity;
+	qFront = 0;
 }
 
 void Contestant::placeRandomCodemon(Arena& A) {
 	do {
 		row = rand() % 12;
 		col = rand() % 12;
-	} while( A.isOccupied(row, col));
+	} while (A.isOccupied(row, col));
 	return;
 }
 
-void Contestant::setActiveCodemon(const int n){
-    activeCodemon = n;
+void Contestant::setActiveCodemon(const int n) {
+	activeCodemon = n;
 }
 
-Contestant::Contestant(){
-    playerName = " ";
-    isHuman = true;
-    row = -1;
-    col = -1;
+Contestant::Contestant() {
+	playerName = " ";
+	isHuman = true;
+	row = -1;
+	col = -1;
 }
 
-Contestant::Contestant(string name, bool human, int codemonNum){
-    playerName = name;
-    isHuman = human;
-    setTeamSize(codemonNum);
-    activeCodemon = 0;
+Contestant::Contestant(string name, bool human, int codemonNum) {
+	playerName = name;
+	isHuman = human;
+	setTeamSize(codemonNum);
+	activeCodemon = 0;
 	row = -1;
 	col = -1;
 	team = new Codemon[teamsize];
-	void placeRandomCodemon(Arena& A);
+	void placeRandomCodemon(Arena & A);
 }
 
 Contestant::~Contestant() {
@@ -79,23 +79,23 @@ Contestant& Contestant::operator = (const Contestant& rhs) {
 	this->playerName = rhs.playerName;
 	this->teamsize = rhs.teamsize;
 	this->activeCodemon = rhs.activeCodemon;
-	this-> row = rhs.row;
+	this->row = rhs.row;
 	this->col = rhs.col;
 	this->isHuman = rhs.isHuman;
 
 	team = new Codemon[teamsize];
-	for(int i = 0; i < teamsize; ++i) {
+	for (int i = 0; i < teamsize; ++i) {
 		team[i] = rhs.team[i];
 	}
 	return *this;
 }
 
 void Contestant::initSharedQueue(int firstCap) {
-    delete[] itemQueue;
-    itemQueue = new Item[firstCap];
-    qCapacity = firstCap;
-    qSize = 0;
-    qFront = 0;
+	delete[] itemQueue;
+	itemQueue = new Item[firstCap];
+	qCapacity = firstCap;
+	qSize = 0;
+	qFront = 0;
 }
 
 
@@ -129,7 +129,8 @@ void Contestant::takeTurn(Arena& arena, char symbol) {
 		char mv;
 		cin >> mv;
 		movement(mv, symbol, arena);
-	} else {
+	}
+	else {
 		const char dir[8] = { 'W','A','S','D','Q','E','Z','C' };
 		char mv = dir[rand() % 8];
 		movement(mv, symbol, arena);
@@ -140,7 +141,7 @@ void Contestant::takeTurn(Arena& arena, char symbol) {
 
 void Contestant::enqueueItem(const Item& item) {
 	if (qSize == qCapacity) {
-		resizeQueue(qCapacity*2);
+		resizeQueue(qCapacity * 2);
 	}
 	int pos = (qFront + qSize) % qCapacity;
 	itemQueue[pos] = item;
@@ -159,8 +160,8 @@ bool Contestant::useNextItem() {
 }
 
 void Contestant::printVisibleMap(const Arena& A) const {
-    cout << "=== " << playerName << "'s visible map ===\n";
-    A.printVisibleMap();
+	cout << "=== " << playerName << "'s visible map ===\n";
+	A.printVisibleMap();
 }
 
 bool Contestant::isAlive() const {
@@ -168,32 +169,33 @@ bool Contestant::isAlive() const {
 }
 
 void Contestant::selectCodemons(Codemon pool[], int poolSize, bool random, int n) {
-    setTeamSize(n);
+	setTeamSize(n);
 
-    if (random) {
-        for (int i = 0; i < n; i++)
-            team[i] = pool[rand() % poolSize];
-    } else {
-        for (int i = 0; i < n; i++) {
-            cout << "\nPick Codemon #" << i + 1 << ":\n";
-            for (int j = 0; j < poolSize; ++j) {
-                cout << j << ": " << pool[j].getName() << " (" << pool[j].getType() << ")\n";
-            }
-            int choice;
-            cout << endl << "pick a number from the pool: ";
-            cin >> choice;
-            while (choice < 0 || choice >= poolSize) {
-                cout << "Invalid. Try again: ";
-                cin >> choice;
-            }
-            team[i] = pool[choice];
-        }
-    }
+	if (random) {
+		for (int i = 0; i < n; i++)
+			team[i] = pool[rand() % poolSize];
+	}
+	else {
+		for (int i = 0; i < n; i++) {
+			cout << "\nPick Codemon #" << i + 1 << ":\n";
+			for (int j = 0; j < poolSize; ++j) {
+				cout << j << ": " << pool[j].getName() << " (" << pool[j].getType() << ")\n";
+			}
+			int choice;
+			cout << endl << "pick a number from the pool: ";
+			cin >> choice;
+			while (choice < 0 || choice >= poolSize) {
+				cout << "Invalid. Try again: ";
+				cin >> choice;
+			}
+			team[i] = pool[choice];
+		}
+	}
 }
 
 
 // Static member initialization
 Item* Contestant::itemQueue = nullptr;
 int   Contestant::qCapacity = 0;
-int   Contestant::qSize     = 0;
-int   Contestant::qFront    = 0;
+int   Contestant::qSize = 0;
+int   Contestant::qFront = 0;

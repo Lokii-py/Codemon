@@ -1,11 +1,16 @@
 #include "mechanic.h"
 #include "Arena.h"
+#include "contestant.h"
+#include "Snuggle.h"
 
 #include <iostream>
 #include <string>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
+
+class Snuggladon;
+class Contestant;
 
 void movement(char move, char type, Arena& arena) {
 
@@ -14,7 +19,7 @@ void movement(char move, char type, Arena& arena) {
 
     int n_row = row;
     int n_col = col;
-     
+
     switch (move) {
     case 'W':
         n_row = row - 1;
@@ -55,72 +60,86 @@ void movement(char move, char type, Arena& arena) {
         return;
     }
 
-    // Example check � tile is not blocked (optional)
+    // Example check tile is not blocked (optional)
     if (arena.isOccupied(n_row, n_col)) {
         cout << "Tile occupied." << endl;
         return;
     }
 
-    arena.setTerrainTile(n_row, n_col,type);
+    arena.setTerrainTile(n_row, n_col, type);
     return;
 }
 
-void battle(Contestant& player, Contestant& comp, Arena& arena) {
-    int playerCount = player.getCodemonCount() - 1;
-    int compCount = comp.getCodemonCount() - 1;
-    int playerDamage = player.pocket[playerCount].skills[0].getBaseDamage();
-    int compDamage = comp.pocket[compCount].skills[0].getBaseDamage();
+void battle(Contestant& player, Snuggladon& snug, bool isHuman) {
+    Codemon codemon = player.getActive();
 
-    bool playerAlive = true;
-    bool compAlive = true;
+    int skillCount = codemon.getSkillCount();
 
-    do {
-        // codemon battles with 
-        // subtract skill damage from each codemon hp
-        player.pocket[playerCount] -= compDamage;
-        comp.pocket[compCount] -= playerDamage;
+    if (isHuman) {
+        // Show Codémon status
+        cout << "\nYour Active Codémon:\n";
+        codemon.print();
 
-        if (player.pocket[playerCount].getCurrentHP() == 0) {
-            playerAlive = false;
-            std::cout << "Player codemon has died.\n";
-            player.death();
+        // Show Snuggladon status
+        cout << "\nSnuggladon Status:\n";
+        snug.printTypes();
+        cout << "HP: " << snug.getHP() << "/" << snug.getMaxHP() << "\n";
+        if (snug.hasAttackBoost()) cout << "Status: Enraged (Attack Boosted)\n";
+        if (snug.hasDamageShield()) cout << "Status: Shielded (Damage Reduced)\n";
+
+        // Prompt user
+        char choice;
+        cout << "\nDo you want to battle Snuggladon? (y/n): ";
+        cin >> choice;
+        if (choice != 'y' && choice != 'Y') {
+            cout << "You chose not to battle this turn.\n";
+            return;
         }
 
-        if (comp.pocket[compCount].getCurrentHP() == 0) {
-            compAlive = false;
-            std::cout << "Computer codemon has died.\n";
-            comp.death();
-
+        // Show available skills
+        cout << "\nAvailable Skills:\n";
+        for (int i = 0; i < skillCount; i++) {
+            cout << i << ". ";
+            codemon.getSkill(i).print(); // Assuming Skill has a print() method
         }
 
-        
-    } while (playerAlive == true && compAlive == true);//while codemon hp is > 0
+        int chosen;
+        do {
+            cout << "Choose a skill to use (0-" << (skillCount - 1) << "): ";
+            cin >> chosen;
+        } while (chosen < 0 || chosen >= skillCount);
+        Skill chosenSkill = codemon.getSkill(chosen);
 
+        double multiplier = 1.0;
+        for (int i = 0; i < snug.getTypeCount(); ++i) {
+            std::string defenderType = snug.getType(i);
+            multiplier *= chosenSkill.getMultiplier(chosenSkill.getType(), defenderType);
+        }
 
-    std::cout << player.pocket[playerCount];
-    std::cout << comp.pocket[compCount];
+        int finalDamage = static_cast<int>(chosenSkill.getBaseDamage() * multiplier);
 
-    if (player.getCodemonCount() == 0) {
-        std::cout << "Player has died.\n";
+        // Announce
+        cout << "\nYou used " << chosenSkill.getName() << " (" << chosenSkill.getType() << ")!";
+        cout << "\nEffectiveness multiplier: x" << multiplier << endl;
+        cout << "Total damage: " << finalDamage << endl;
+
+        snug.takeDamage(finalDamage);
 
     }
-    if (comp.getCodemonCount() == 0) {
-        std::cout << "Computer has died.\n";
+    else {
+        // AI always attacks if adjacent
+        int chosen = rand() % skillCount;
+        Skill selectedSkill = codemon.getSkill(chosen);
+        cout << player.getName() << "'s Codémon uses " << selectedSkill.getName() << "!\n";
+
+        double multiplier = 1.0;
+        for (int i = 0; i < snug.getTypeCount(); ++i) {
+            std::string defenderType = snug.getType(i);
+            multiplier *= selectedSkill.getMultiplier(selectedSkill.getType(), defenderType);
+        }
+
+        int finalDamage = static_cast<int>(selectedSkill.getBaseDamage() * multiplier);
+
+        snug.takeDamage(finalDamage);
     }
-    return;
 }
-
-int countLinesInFile(const string& filename) {
-    ifstream fin(filename); // Open the file for reading 
-    string line;
-    int count = 0;
-
-    // Read the file line by line 
-    while (getline(fin, line)) {
-        count++;
-    }
-
-    fin.close(); // Close the file 
-    return count;
-}
-
