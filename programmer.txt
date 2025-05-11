@@ -1,0 +1,5 @@
+// Programmer: Henry Campbell (id: 12619823;hmcngb) and Lokesh Das (id: 12631232;ldd3g)
+// Date: 5/5/25
+// File: main.cpp
+// Assignment: Final 
+// Purpose: This is the Codemon simulation game player.
