@@ -1,53 +1,57 @@
 #ifndef SKILL_H
 #define SKILL_H
-
 #include <iostream>
-#include <string>
+using namespace std;
 
 class Codemon;
 
 class Skill {
 private:
-    std::string name;
+    string name;
+    string type;
+    string description;
     int baseDamage;
-
 public:
-    // Desc: This default constructor sets the inital values for the skill
-    // Pre: None
-    // Post: sets name to "Unnamed" and base damage to 0.
+    // Desc: Default constructor to initialize a Skill with default values.
+    // Pre: None.
+    // Post: Creates a Skill object with empty name/type and zero damage.
     Skill();
-    // Desc: This is a constructor that allows for the inputs of the skill to be passed in as value.
-    // Pre: need string arguement and int arguement
-    // Post: Takes argument for the name and base damage and assigns them accordingly.
-    Skill(const std::string& name, int baseDamage);
 
-    // Desc: This functions returns the base damage of the skill
-    // Pre: none
-    // Post: returns int base damage of skill
+    // Desc: Parameterized constructor to initialize a Skill with specific values.
+    // Pre: name and type must be valid strings, baseDamage must be non-negative, desc is a description string.
+    // Post: Creates a Skill with the given properties.
+    Skill(const std::string& name, const std::string& t, int baseDamage, const std::string& desc);
+
+    // Desc: Returns the base damage value of the skill.
+    // Pre: None.
+    // Post: Returns an integer representing the skill's base damage.
     int getBaseDamage() const;
-    
-    // Desc: This functions returns the name of the skill
-    // Pre: none
-    // Post: returns string name of skill
-    std::string getName() const;
 
-    // Desc: This functions increases the damage of the skill
-    // Pre: percent integer
-    // Post: updates new basedamage of skill with percent increase
+    // Desc: Returns the name of the skill.
+    // Pre: None.
+    // Post: Returns a string representing the skill's name.
+    string getName() const;
+
+    // Desc: Increases the skill's base damage by a given percentage.
+    // Pre: percent must be a valid positive integer (e.g., 25 for +25%).
+    // Post: baseDamage is increased accordingly.
     void increaseDamage(int percent);
 
-    // Desc: This functions prints out the skill nicely
-    // Pre: None
-    // Post: formats and print line for each skill
+    // Desc: Prints the skill's details (name, type, damage, description).
+    // Pre: None.
+    // Post: Outputs the skill information to the console.
     void print() const;
 
-    //Desc: This function calculates the effective damage based on the type chart
-    //Pre: attacker and defender are Codemon objects
-    //Post: returns the effective damage as a double
-    double getEffectiveDamage(const Codemon& attacker, const Codemon& defender);
+    // Desc: Returns the type of the skill.
+    // Pre: None.
+    // Post: Returns a string representing the skill's type.
+    string getType() { return type; }
 
-    friend class Codemon;
-    
+    // Desc: Computes type-based damage multiplier using attacker and defender types.
+    // Pre: attacker and defender must be valid type strings.
+    // Post: Returns a double representing the effectiveness multiplier.
+    double getMultiplier(const std::string& attacker, const std::string& defender);
+
 };
 
 #endif
